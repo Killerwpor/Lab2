@@ -3,11 +3,14 @@ package co.edu.udea.compumovil.gr05_20181.labscm20181;
 import android.Manifest;
 import android.net.Uri;
 import android.support.annotation.IdRes;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class activityPlatos extends AppCompatActivity {
+    private Menu menu;
     private Button botonGaleria, botonRegistrar;
     private NumberPicker pickerHorario;
     private EditText campoPrecio,campoNombre,campoIngredientes;
@@ -52,7 +56,7 @@ public class activityPlatos extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platos);
-        botonGaleria= (Button) findViewById(R.id.botonGaleria);
+        botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
         iv_image= (ImageView) findViewById(R.id.imageViewPlato);
         campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
         campoIngredientes= (EditText) findViewById(R.id.editTextIngredientesPlato);
@@ -148,8 +152,26 @@ public class activityPlatos extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+        menu.getItem(0).setVisible(false);
+        menu.getItem(1).setVisible(false);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem opcionMenu){
+        int id = opcionMenu.getItemId();
+        if(id == R.id.limpiar){
 
-
+        } else if(id == R.id.salir){
+            System.exit(1);
+        } else if(id == android.R.id.home){
+            NavUtils.navigateUpFromSameTask(this);
+        }
+        return true;
+    }
 
 }

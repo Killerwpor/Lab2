@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public class activityBebidas extends AppCompatActivity {
 
-    Menu menu;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

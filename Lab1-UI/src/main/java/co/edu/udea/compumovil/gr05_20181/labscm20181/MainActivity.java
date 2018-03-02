@@ -12,24 +12,31 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Menu menu;
-    //private Intent activityPlatos = new Intent(this, activityPlatos.class);
-    //private Intent activityBebidas = new Intent(getApplicationContext(), activityBebidas.class);
-    private Button botonPrueba;
+    private Button botonBebidas;
+    private Button botonPlatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        botonPrueba= (Button) findViewById(R.id.botonPrueba);
-        botonPrueba.setOnClickListener(new View.OnClickListener() {
+        botonPlatos = (Button) findViewById(R.id.botonPlatos);
+        botonPlatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent actividad2= new Intent(getApplicationContext(), activityPlatos.class);
-                startActivity(actividad2);
+                Intent actividadPlatos = new Intent(getApplicationContext(), activityPlatos.class);
+                startActivity(actividadPlatos);
+            }
+        });
+        botonBebidas = (Button) findViewById(R.id.botonBebidas);
+        botonBebidas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent actividadBebidas = new Intent(getApplicationContext(), activityBebidas.class);
+                startActivity(actividadBebidas);
             }
         });
     }
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -52,6 +59,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-    */
 
 }
