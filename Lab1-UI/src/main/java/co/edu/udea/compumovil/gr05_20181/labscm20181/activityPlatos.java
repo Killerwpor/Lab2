@@ -71,8 +71,6 @@ public class activityPlatos extends AppCompatActivity {
         cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
         botonEntrada= (RadioButton) findViewById(R.id.radioButton);
         botonPlatoFuerte= (RadioButton) findViewById(R.id.radioButton2);
-       // pickerHorario.setMinValue(0);
-        //pickerHorario.setMaxValue(24);
         pickerHorario.setWrapSelectorWheel(true);
     rbm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,10 +137,7 @@ public class activityPlatos extends AppCompatActivity {
     private void setSingleShowButton() {
 
 
-        Button btn_single_show = (Button) findViewById(R.id.botonGaleria);
-        btn_single_show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
 
 
                 PermissionListener permissionlistener = new PermissionListener() {
@@ -182,8 +177,8 @@ public class activityPlatos extends AppCompatActivity {
                         .check();
 
             }
-        });
-    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
