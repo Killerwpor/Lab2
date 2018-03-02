@@ -48,12 +48,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem opcionMenu) {
         int id = opcionMenu.getItemId();
-        if (id == R.id.platos) {
-
-        }
-        if (id == R.id.bebidas) {
-           //startActivity(activityBebidas);
-        }
         if (id == R.id.salir) {
             System.exit(1);
         }
