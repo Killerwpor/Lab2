@@ -13,12 +13,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -37,14 +39,17 @@ import java.util.ArrayList;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class activityPlatos extends AppCompatActivity {
+
     private Menu menu;
+    /*private ListView mostrarPlatos;
+    private ArrayList <String> platosRegistrados;*/
     private Button botonGaleria, botonRegistrar;
     private NumberPicker pickerHorario;
     private EditText campoPrecio,campoNombre,campoIngredientes;
     ArrayList<Uri> selectedUriList;
     Uri selectedUri;
     private ViewGroup mSelectedImagesContainer;
-   private ImageView iv_image;
+    private ImageView iv_image;
     private TextView cuadroDatos;
     private RadioGroup grupoRadios;
     private RadioButton botonPlatoFuerte,botonEntrada;
@@ -56,6 +61,9 @@ public class activityPlatos extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platos);
+        /*platosRegistrados = new ArrayList<String>();
+        ArrayAdapter <String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, platosRegistrados);
+        mostrarPlatos.setAdapter(arrayAdapter);*/
         botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
         iv_image= (ImageView) findViewById(R.id.imageViewPlato);
         campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
@@ -68,11 +76,11 @@ public class activityPlatos extends AppCompatActivity {
         rbt= (CheckBox) findViewById(R.id.tardeRb);
         rbm= (CheckBox) findViewById(R.id.mañanaRb);
         rbn= (CheckBox) findViewById(R.id.nocheRb);
-        cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
+        //cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
         botonEntrada= (RadioButton) findViewById(R.id.radioButton);
         botonPlatoFuerte= (RadioButton) findViewById(R.id.radioButton2);
         pickerHorario.setWrapSelectorWheel(true);
-    rbm.setOnClickListener(new View.OnClickListener() {
+        rbm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rbn.setChecked(false);
@@ -104,27 +112,28 @@ public class activityPlatos extends AppCompatActivity {
 
             }
         });
- botonRegistrar.setOnClickListener(new View.OnClickListener() {
-     @Override
-     public void onClick(View view) {
-             cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
-         cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
-         cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
-        if(botonEntrada.isSelected())
-         cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
-         else
-            cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
-         if(rbm.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
-         else if(rbn.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
-         else if(rbt.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");
 
+        botonRegistrar.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            /*cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
+            cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
+            cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
+            if(botonEntrada.isSelected())
+                cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
+            else
+                cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
+            if(rbm.isChecked())
+                cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
+            else if(rbn.isChecked())
+                cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
+            else if(rbt.isChecked())
+                cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");*/
 
-
-     }
- });
+            /*platosRegistrados.add(campoNombre.getText().toString());
+            Log.d("Platos registrados:", platosRegistrados.get(0));*/
+        }
+        });
 
     }
 

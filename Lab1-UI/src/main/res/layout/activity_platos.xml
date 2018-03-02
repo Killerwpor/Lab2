@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.udea.compumovil.gr05_20181.labscm20181.activityPlatos"
     android:orientation="vertical"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:context="co.edu.udea.compumovil.gr05_20181.labscm20181.activityPlatos"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <EditText
         android:id="@+id/editTextNombrePlato"
@@ -42,25 +42,24 @@
         android:id="@+id/nocheRb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Noche"
-        tools:layout_constraintTop_creator="1"
+        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:text="Noche"
+        app:layout_constraintLeft_toLeftOf="@+id/botonGaleriaPlato"
         app:layout_constraintTop_toBottomOf="@+id/botonGaleriaPlato"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/botonGaleriaPlato"
-        android:layout_marginLeft="10dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <CheckBox
         android:id="@+id/mañanaRb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Mañana"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/nocheRb"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/nocheRb"
         app:layout_constraintRight_toRightOf="@+id/nocheRb"
-        app:layout_constraintHorizontal_bias="0.0" />
-
+        app:layout_constraintTop_toBottomOf="@+id/nocheRb"
+        tools:layout_constraintTop_creator="1" />
 
 
     <CheckBox
@@ -68,11 +67,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tarde"
-        app:layout_constraintRight_toRightOf="@+id/mañanaRb"
-        app:layout_constraintLeft_toLeftOf="@+id/mañanaRb"
         app:layout_constraintHorizontal_bias="0.0"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/mañanaRb" />
+        app:layout_constraintLeft_toLeftOf="@+id/mañanaRb"
+        app:layout_constraintRight_toRightOf="@+id/mañanaRb"
+        app:layout_constraintTop_toBottomOf="@+id/mañanaRb"
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/editTextIngredientesPlato"
@@ -81,42 +80,40 @@
         android:ems="10"
         android:hint="Ingredientes"
         android:inputType="textPersonName"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/editTextPrecioPlato"
         app:layout_constraintRight_toRightOf="@+id/editTextPrecioPlato"
         app:layout_constraintTop_toBottomOf="@+id/editTextPrecioPlato"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/editTextPrecioPlato" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/editTextPrecioPlato"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
         android:ems="10"
         android:hint="Precio"
         android:inputType="number"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/botonGaleriaPlato"
         app:layout_constraintRight_toRightOf="@+id/botonGaleriaPlato"
-        android:layout_marginTop="96dp"
         app:layout_constraintTop_toBottomOf="@+id/botonGaleriaPlato"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/botonGaleriaPlato" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <NumberPicker
         android:id="@+id/numberPicker"
         android:layout_width="0dp"
         android:layout_height="17dp"
         android:layout_marginTop="12dp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/editTextIngredientesPlato"
         app:layout_constraintRight_toRightOf="@+id/editTextIngredientesPlato"
         app:layout_constraintTop_toBottomOf="@+id/editTextIngredientesPlato"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-
+        tools:layout_constraintTop_creator="1" />
 
 
     <RadioGroup
@@ -166,41 +163,45 @@
         android:id="@+id/imageViewPlato"
         android:layout_width="120dp"
         android:layout_height="135dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:adjustViewBounds="false"
         android:background="@android:drawable/alert_dark_frame"
         android:visibility="visible"
-        app:layout_constraintLeft_toRightOf="@+id/mostrarDatos"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/mostrarPlatos"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botonRegistrar" />
-
-    <TextView
-        android:id="@+id/mostrarDatos"
-        android:layout_width="218dp"
-        android:layout_height="132dp"
-        android:layout_marginBottom="9dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
         android:id="@+id/botonRegistrar"
         android:layout_width="98dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Guardar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numberPicker"
+        app:layout_constraintTop_toBottomOf="@+id/numberPicker" />
+
+    <ListView
+        android:id="@+id/mostrarPlatos"
+        android:layout_width="202dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewPlato"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonRegistrar"></ListView>
 
     />
 
