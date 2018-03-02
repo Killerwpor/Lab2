@@ -65,7 +65,7 @@ public class activityPlatos extends AppCompatActivity {
         //mGlideRequestManager = Glide.with(this);
         botonRegistrar= (Button) findViewById(R.id.botonRegistrar);
         pickerHorario= (NumberPicker) findViewById(R.id.numberPicker);
-
+        rbt= (CheckBox) findViewById(R.id.tardeRb);
         rbm= (CheckBox) findViewById(R.id.mañanaRb);
         rbn= (CheckBox) findViewById(R.id.nocheRb);
         cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
@@ -74,16 +74,35 @@ public class activityPlatos extends AppCompatActivity {
        // pickerHorario.setMinValue(0);
         //pickerHorario.setMaxValue(24);
         pickerHorario.setWrapSelectorWheel(true);
+    rbm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rbn.setChecked(false);
+                rbt.setChecked(false);
+            }
+        });
 
+        rbn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rbm.setChecked(false);
+                rbt.setChecked(false);
+            }
+        });
+
+        rbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rbm.setChecked(false);
+                rbn.setChecked(false);
+            }
+        });
 
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setSingleShowButton();
-               /* Glide.with(activityPlatos.this)
-                        .load("https://pre00.deviantart.net/0352/th/pre/f/2013/120/7/b/png_monsters_inc_by_upinflames12-d63nx7i.png")
-                        .into(iv_image);
-                        */
+
 
             }
         });
@@ -97,12 +116,26 @@ public class activityPlatos extends AppCompatActivity {
          cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
          else
             cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
+         if(rbm.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
+         else if(rbn.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
+         else if(rbt.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");
+
 
 
      }
  });
 
     }
+
+
+
+
+
+
+
     private void setSingleShowButton() {
 
 
