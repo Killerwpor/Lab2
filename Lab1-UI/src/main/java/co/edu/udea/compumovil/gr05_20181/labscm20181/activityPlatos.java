@@ -136,45 +136,12 @@ public class activityPlatos extends AppCompatActivity {
 
     private void setSingleShowButton() {
 
-
-
-
-
-                PermissionListener permissionlistener = new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-
-
-                        TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(activityPlatos.this)
-                                .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
-                                    @Override
-                                    public void onImageSelected(Uri uri) {
-                                        Glide.with(activityPlatos.this)
-                                                .load(uri)
-                                                //.placeholder(R.drawable.img_error)
-                                                .into(iv_image);
-                                    }
-                                })
-                                .create();
-
-                        tedBottomPicker.show(getSupportFragmentManager());
-
-
-                    }
-
-                    @Override
-                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                        Toast.makeText(activityPlatos.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-
-                };
-
-                 TedPermission.with(activityPlatos.this)
-                        .setPermissionListener(permissionlistener)
-                        .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.INTERNET)
-                        .check();
+        
+        TedPermission.with(activityPlatos.this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("Debe aceptar los permisos")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check();
 
             }
 
@@ -201,5 +168,37 @@ public class activityPlatos extends AppCompatActivity {
         }
         return true;
     }
+
+    PermissionListener permissionlistener = new PermissionListener() {
+
+
+        @Override
+        public void onPermissionGranted() {
+
+
+            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(activityPlatos.this)
+                    .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
+                        @Override
+                        public void onImageSelected(Uri uri) {
+                            Glide.with(activityPlatos.this)
+                                    .load(uri)
+                                    //.placeholder(R.drawable.img_error)
+                                    .into(iv_image);
+                        }
+                    })
+                    .create();
+
+            tedBottomPicker.show(getSupportFragmentManager());
+
+
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            Toast.makeText(activityPlatos.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    };
 
 }
