@@ -52,7 +52,7 @@ public class activityPlatos extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platos);
-        botonGaleria= (Button) findViewById(R.id.botonGaleria);
+        botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
         iv_image= (ImageView) findViewById(R.id.imageViewPlato);
         campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
         campoIngredientes= (EditText) findViewById(R.id.editTextIngredientesPlato);
