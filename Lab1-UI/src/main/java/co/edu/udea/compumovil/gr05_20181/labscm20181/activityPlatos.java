@@ -6,6 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -42,10 +43,10 @@ public class activityPlatos extends AppCompatActivity {
     private NumberPicker pickerHorario;
     private EditText campoPrecio,campoNombre,campoIngredientes;
     ArrayList<Uri> selectedUriList;
-    Uri selectedUri;
+    private Uri selectedUri;
     private ViewGroup mSelectedImagesContainer;
    private ImageView iv_image;
-    private TextView cuadroDatos;
+    private TextView cuadroDatos,etiqueta;
     private RadioGroup grupoRadios;
     private RadioButton botonPlatoFuerte,botonEntrada;
 
@@ -58,6 +59,7 @@ public class activityPlatos extends AppCompatActivity {
         setContentView(R.layout.activity_platos);
         botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
         iv_image= (ImageView) findViewById(R.id.imageViewPlato);
+        etiqueta= (TextView) findViewById(R.id.etiqueta);
         campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
         campoIngredientes= (EditText) findViewById(R.id.editTextIngredientesPlato);
         campoNombre= (EditText) findViewById(R.id.editTextNombrePlato);
@@ -72,6 +74,9 @@ public class activityPlatos extends AppCompatActivity {
         botonEntrada= (RadioButton) findViewById(R.id.radioButton);
         botonPlatoFuerte= (RadioButton) findViewById(R.id.radioButton2);
         pickerHorario.setWrapSelectorWheel(true);
+        //etiqueta.setKeyListener(null);
+        etiqueta.setEnabled(false);
+        cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
     rbm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +109,9 @@ public class activityPlatos extends AppCompatActivity {
 
             }
         });
+
+        pickerHorario.setMinValue(1);
+        pickerHorario.setMaxValue(14);
  botonRegistrar.setOnClickListener(new View.OnClickListener() {
      @Override
      public void onClick(View view) {
@@ -112,7 +120,7 @@ public class activityPlatos extends AppCompatActivity {
          cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
         if(botonEntrada.isSelected())
          cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
-         else
+         else if(botonPlatoFuerte.isSelected())
             cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
          if(rbm.isChecked())
              cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
@@ -120,6 +128,9 @@ public class activityPlatos extends AppCompatActivity {
              cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
          else if(rbt.isChecked())
              cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");
+         String tiempo;
+         tiempo=String.valueOf(pickerHorario.getValue());
+         cuadroDatos.setText(cuadroDatos.getText()+"Tiempo de preparación: "+tiempo+"\n");
 
 
 
@@ -136,7 +147,7 @@ public class activityPlatos extends AppCompatActivity {
 
     private void setSingleShowButton() {
 
-        
+
         TedPermission.with(activityPlatos.this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("Debe aceptar los permisos")
@@ -180,6 +191,7 @@ public class activityPlatos extends AppCompatActivity {
                     .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                         @Override
                         public void onImageSelected(Uri uri) {
+                            selectedUri=uri;
                             Glide.with(activityPlatos.this)
                                     .load(uri)
                                     //.placeholder(R.drawable.img_error)
@@ -200,5 +212,7 @@ public class activityPlatos extends AppCompatActivity {
 
 
     };
+
+
 
 }
