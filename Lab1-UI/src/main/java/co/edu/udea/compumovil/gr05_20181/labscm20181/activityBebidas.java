@@ -46,7 +46,7 @@ public class activityBebidas extends AppCompatActivity {
 
             Glide.with(activityBebidas.this)
                     .load(selectedUri)
-                    
+
                     .into(iv_image);
         }
 
