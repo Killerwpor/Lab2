@@ -6,6 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -13,14 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,18 +38,15 @@ import java.util.ArrayList;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class activityPlatos extends AppCompatActivity {
-
     private Menu menu;
-    /*private ListView mostrarPlatos;
-    private ArrayList <String> platosRegistrados;*/
     private Button botonGaleria, botonRegistrar;
     private NumberPicker pickerHorario;
     private EditText campoPrecio,campoNombre,campoIngredientes;
     ArrayList<Uri> selectedUriList;
-    Uri selectedUri;
+    private Uri selectedUri;
     private ViewGroup mSelectedImagesContainer;
-    private ImageView iv_image;
-    private TextView cuadroDatos;
+   private ImageView iv_image;
+    private TextView cuadroDatos,etiqueta;
     private RadioGroup grupoRadios;
     private RadioButton botonPlatoFuerte,botonEntrada;
 
@@ -61,11 +57,9 @@ public class activityPlatos extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platos);
-        /*platosRegistrados = new ArrayList<String>();
-        ArrayAdapter <String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, platosRegistrados);
-        mostrarPlatos.setAdapter(arrayAdapter);*/
         botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
         iv_image= (ImageView) findViewById(R.id.imageViewPlato);
+        etiqueta= (TextView) findViewById(R.id.etiqueta);
         campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
         campoIngredientes= (EditText) findViewById(R.id.editTextIngredientesPlato);
         campoNombre= (EditText) findViewById(R.id.editTextNombrePlato);
@@ -76,11 +70,14 @@ public class activityPlatos extends AppCompatActivity {
         rbt= (CheckBox) findViewById(R.id.tardeRb);
         rbm= (CheckBox) findViewById(R.id.mañanaRb);
         rbn= (CheckBox) findViewById(R.id.nocheRb);
-        //cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
+        cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
         botonEntrada= (RadioButton) findViewById(R.id.radioButton);
         botonPlatoFuerte= (RadioButton) findViewById(R.id.radioButton2);
         pickerHorario.setWrapSelectorWheel(true);
-        rbm.setOnClickListener(new View.OnClickListener() {
+        //etiqueta.setKeyListener(null);
+        etiqueta.setEnabled(false);
+        cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
+    rbm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rbn.setChecked(false);
@@ -113,27 +110,32 @@ public class activityPlatos extends AppCompatActivity {
             }
         });
 
-        botonRegistrar.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            /*cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
-            cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
-            cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
-            if(botonEntrada.isSelected())
-                cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
-            else
-                cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
-            if(rbm.isChecked())
-                cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
-            else if(rbn.isChecked())
-                cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
-            else if(rbt.isChecked())
-                cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");*/
+        pickerHorario.setMinValue(1);
+        pickerHorario.setMaxValue(14);
+ botonRegistrar.setOnClickListener(new View.OnClickListener() {
+     @Override
+     public void onClick(View view) {
+             cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
+         cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
+         cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
+        if(botonEntrada.isSelected())
+         cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
+         else if(botonPlatoFuerte.isSelected())
+            cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
+         if(rbm.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
+         else if(rbn.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
+         else if(rbt.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");
+         String tiempo;
+         tiempo=String.valueOf(pickerHorario.getValue());
+         cuadroDatos.setText(cuadroDatos.getText()+"Tiempo de preparación: "+tiempo+"\n");
 
-            /*platosRegistrados.add(campoNombre.getText().toString());
-            Log.d("Platos registrados:", platosRegistrados.get(0));*/
-        }
-        });
+
+
+     }
+ });
 
     }
 
@@ -145,7 +147,7 @@ public class activityPlatos extends AppCompatActivity {
 
     private void setSingleShowButton() {
 
-        
+
         TedPermission.with(activityPlatos.this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("Debe aceptar los permisos")
@@ -188,6 +190,7 @@ public class activityPlatos extends AppCompatActivity {
                     .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                         @Override
                         public void onImageSelected(Uri uri) {
+                            selectedUri=uri;
                             Glide.with(activityPlatos.this)
                                     .load(uri)
                                     //.placeholder(R.drawable.img_error)
@@ -208,5 +211,7 @@ public class activityPlatos extends AppCompatActivity {
 
 
     };
+
+
 
 }
