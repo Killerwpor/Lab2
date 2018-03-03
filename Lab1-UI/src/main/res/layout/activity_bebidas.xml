@@ -79,7 +79,7 @@
         android:id="@+id/imageViewBebida"
         android:layout_width="122dp"
         android:layout_height="155dp"
-        android:layout_marginBottom="86dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginEnd="131dp"
         android:layout_marginStart="131dp"
         android:adjustViewBounds="false"
@@ -87,7 +87,17 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/cuadroDatos"
+        android:layout_width="105dp"
+        android:layout_height="180dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="266dp" />
 
     />
 

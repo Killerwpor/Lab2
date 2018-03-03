@@ -49,6 +49,11 @@ public class activityPlatos extends AppCompatActivity {
     private TextView cuadroDatos,etiqueta;
     private RadioGroup grupoRadios;
     private RadioButton botonPlatoFuerte,botonEntrada;
+    private static final String RESUME_KEY = "resume";
+    private static final String FOTO_KEY = "foto";
+    private String datosrRecuperados;
+    private String datosrRecuperados2;
+
 
     CheckBox rbm,rbt,rbn;
     public RequestManager mGlideRequestManager;
@@ -76,6 +81,17 @@ public class activityPlatos extends AppCompatActivity {
         pickerHorario.setWrapSelectorWheel(true);
         //etiqueta.setKeyListener(null);
         etiqueta.setEnabled(false);
+        if (savedInstanceState != null) {
+            datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
+            datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
+            cuadroDatos.setText(datosrRecuperados);
+            selectedUri= Uri.parse(datosrRecuperados2);
+
+            Glide.with(activityPlatos.this)
+                    .load(selectedUri)
+                    //.placeholder(R.drawable.img_error)
+                    .into(iv_image);
+ }
         cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
     rbm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +123,7 @@ public class activityPlatos extends AppCompatActivity {
                 setSingleShowButton();
 
 
+
             }
         });
 
@@ -115,6 +132,7 @@ public class activityPlatos extends AppCompatActivity {
  botonRegistrar.setOnClickListener(new View.OnClickListener() {
      @Override
      public void onClick(View view) {
+
              cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
          cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
          cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
@@ -134,9 +152,19 @@ public class activityPlatos extends AppCompatActivity {
 
 
 
+
      }
  });
 
+
+
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        datosrRecuperados= String.valueOf(cuadroDatos.getText());
+        savedInstanceState.putString(RESUME_KEY, datosrRecuperados);
+        savedInstanceState.putString(FOTO_KEY, datosrRecuperados2);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 
@@ -191,6 +219,7 @@ public class activityPlatos extends AppCompatActivity {
                         @Override
                         public void onImageSelected(Uri uri) {
                             selectedUri=uri;
+                            datosrRecuperados2= String.valueOf(selectedUri);
                             Glide.with(activityPlatos.this)
                                     .load(uri)
                                     //.placeholder(R.drawable.img_error)
