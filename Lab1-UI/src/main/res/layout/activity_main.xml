@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="co.edu.udea.compumovil.gr05_20181.labscm20181.MainActivity">
 
     <LinearLayout

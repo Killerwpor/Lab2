@@ -124,11 +124,6 @@ public class activityPlatos extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     private void setSingleShowButton() {
 
 
