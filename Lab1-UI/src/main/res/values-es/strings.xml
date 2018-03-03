@@ -9,7 +9,9 @@
     <string name="button_bebidas_guardar">Guardar</string>
     <string name="button_platos">Platos</string>
     <string name="editText_platos_nombre">Nombre</string>
+    <string name="editText_platos_tiempo">Tiempo de Cocción</string>
     <string name="button_platos_foto">Foto</string>
+    <string name="platos_horario">Horario</string>
     <string name="checkButton_platos_mañana">Mañana</string>
     <string name="checkButton_platos_tarde">Tarde</string>
     <string name="checkButton_platos_noche">Noche</string>
