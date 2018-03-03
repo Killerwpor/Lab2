@@ -41,16 +41,16 @@ public class activityPlatos extends AppCompatActivity {
     private Menu menu;
     private Button botonGaleria, botonRegistrar;
     private NumberPicker pickerHorario;
-    private EditText campoPrecio,campoNombre,campoIngredientes;
+    private EditText campoPrecio,campoNombre,campoIngredientes, tiempoCoccion;
     ArrayList<Uri> selectedUriList;
     private Uri selectedUri;
     private ViewGroup mSelectedImagesContainer;
-   private ImageView iv_image;
+    private ImageView iv_image;
     private TextView cuadroDatos,etiqueta;
     private RadioGroup grupoRadios;
     private RadioButton botonPlatoFuerte,botonEntrada;
-
-    CheckBox rbm,rbt,rbn;
+    private String horario;
+    private CheckBox rbm,rbt,rbn;
     public RequestManager mGlideRequestManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,25 +59,24 @@ public class activityPlatos extends AppCompatActivity {
         setContentView(R.layout.activity_platos);
         botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
         iv_image= (ImageView) findViewById(R.id.imageViewPlato);
-        etiqueta= (TextView) findViewById(R.id.etiqueta);
         campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
         campoIngredientes= (EditText) findViewById(R.id.editTextIngredientesPlato);
         campoNombre= (EditText) findViewById(R.id.editTextNombrePlato);
         grupoRadios= (RadioGroup) findViewById(R.id.grupoRadios);
+        tiempoCoccion = (EditText) findViewById(R.id.tiempoCoccion);
         //mGlideRequestManager = Glide.with(this);
         botonRegistrar= (Button) findViewById(R.id.botonRegistrar);
         pickerHorario= (NumberPicker) findViewById(R.id.numberPicker);
         rbt= (CheckBox) findViewById(R.id.tardeRb);
         rbm= (CheckBox) findViewById(R.id.mañanaRb);
         rbn= (CheckBox) findViewById(R.id.nocheRb);
+        horario = getString(R.string.platos_horario);
         cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
         botonEntrada= (RadioButton) findViewById(R.id.radioButton);
         botonPlatoFuerte= (RadioButton) findViewById(R.id.radioButton2);
         pickerHorario.setWrapSelectorWheel(true);
-        //etiqueta.setKeyListener(null);
-        etiqueta.setEnabled(false);
         cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
-    rbm.setOnClickListener(new View.OnClickListener() {
+        rbm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rbn.setChecked(false);
@@ -112,31 +111,27 @@ public class activityPlatos extends AppCompatActivity {
 
         pickerHorario.setMinValue(1);
         pickerHorario.setMaxValue(14);
- botonRegistrar.setOnClickListener(new View.OnClickListener() {
-     @Override
-     public void onClick(View view) {
-             cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
-         cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
-         cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
-        if(botonEntrada.isSelected())
-         cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
-         else if(botonPlatoFuerte.isSelected())
-            cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
-         if(rbm.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
-         else if(rbn.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
-         else if(rbt.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");
-         String tiempo;
-         tiempo=String.valueOf(pickerHorario.getValue());
-         cuadroDatos.setText(cuadroDatos.getText()+"Tiempo de preparación: "+tiempo+"\n");
 
-
-
-     }
- });
-
+        botonRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
+                cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
+                cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n");
+                if(botonEntrada.isSelected())
+                    cuadroDatos.setText(cuadroDatos.getText() + botonEntrada.getText().toString() + "\n");
+                else if(botonPlatoFuerte.isSelected())
+                    cuadroDatos.setText(cuadroDatos.getText() + botonPlatoFuerte.getText().toString() + "\n");
+                if(rbm.isChecked())
+                    cuadroDatos.setText(cuadroDatos.getText() + horario + ": " + rbm.getText().toString() + "\n");
+                else if(rbn.isChecked())
+                    cuadroDatos.setText(cuadroDatos.getText() + horario + rbn.getText().toString() + "\n");
+                else if(rbt.isChecked())
+                    cuadroDatos.setText(cuadroDatos.getText() + horario + rbt.getText().toString() + "\n");
+                String tiempo = String.valueOf(pickerHorario.getValue());
+                cuadroDatos.setText(cuadroDatos.getText() + tiempoCoccion.getText().toString() + ": " + tiempo + "\n");
+            }
+        });
     }
 
 

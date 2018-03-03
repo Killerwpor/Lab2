@@ -112,7 +112,7 @@
         android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/botonRegistrar"
         android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/etiqueta"
+        app:layout_constraintLeft_toLeftOf="@+id/tiempoCoccion"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -206,12 +206,12 @@
         app:layout_constraintBottom_toTopOf="@+id/mostrarDatos" />
 
     <EditText
-        android:id="@+id/etiqueta"
+        android:id="@+id/tiempoCoccion"
         android:layout_width="173dp"
         android:layout_height="43dp"
         android:ems="10"
         android:inputType="none|textPersonName"
-        android:text="Tiempo preparación"
+        android:text="@string/editText_platos_tiempo"
         tools:clickable="false"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/mostrarDatos"
@@ -222,9 +222,7 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.586" />
-
-
-
+        app:layout_constraintVertical_bias="0.586"
+        android:enabled="false"/>
 
 </android.support.constraint.ConstraintLayout>
