@@ -133,22 +133,21 @@ public class activityPlatos extends AppCompatActivity {
      @Override
      public void onClick(View view) {
 
-             cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
-         cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
-         cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
-        if(botonEntrada.isSelected())
-         cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
+         cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
+         cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
+         cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n");
+         if(botonEntrada.isSelected())
+             cuadroDatos.setText(cuadroDatos.getText() + botonEntrada.getText().toString() + "\n");
          else if(botonPlatoFuerte.isSelected())
-            cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
+             cuadroDatos.setText(cuadroDatos.getText() + botonPlatoFuerte.getText().toString() + "\n");
          if(rbm.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
+             cuadroDatos.setText(cuadroDatos.getText() + "horario" + ": " + rbm.getText().toString() + "\n");
          else if(rbn.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
+             cuadroDatos.setText(cuadroDatos.getText() + "horario" + rbn.getText().toString() + "\n");
          else if(rbt.isChecked())
-             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");
-         String tiempo;
-         tiempo=String.valueOf(pickerHorario.getValue());
-         cuadroDatos.setText(cuadroDatos.getText()+"Tiempo de preparación: "+tiempo+"\n");
+             cuadroDatos.setText(cuadroDatos.getText() + "horario" + rbt.getText().toString() + "\n");
+         String tiempo = String.valueOf(pickerHorario.getValue());
+         cuadroDatos.setText(cuadroDatos.getText() + etiqueta.getText().toString() + ": " + tiempo + "\n");
 
 
 
