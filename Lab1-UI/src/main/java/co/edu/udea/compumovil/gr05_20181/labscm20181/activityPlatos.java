@@ -2,44 +2,60 @@ package co.edu.udea.compumovil.gr05_20181.labscm20181;
 
 import android.Manifest;
 import android.net.Uri;
+import android.support.annotation.IdRes;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class activityPlatos extends AppCompatActivity {
     private Menu menu;
     private Button botonGaleria, botonRegistrar;
     private NumberPicker pickerHorario;
-    private EditText campoPrecio,campoNombre,campoIngredientes, tiempoCoccion;
+    private EditText campoPrecio,campoNombre,campoIngredientes;
     ArrayList<Uri> selectedUriList;
     private Uri selectedUri;
     private ViewGroup mSelectedImagesContainer;
-    private ImageView iv_image;
-    private TextView cuadroDatos;
+   private ImageView iv_image;
+    private TextView cuadroDatos,etiqueta;
     private RadioGroup grupoRadios;
     private RadioButton botonPlatoFuerte,botonEntrada;
-    private String horario;
-    private CheckBox rbm,rbt,rbn;
+    private static final String RESUME_KEY = "resume";
+    private static final String FOTO_KEY = "foto";
+    private String datosrRecuperados;
+    private String datosrRecuperados2;
+
+
+    CheckBox rbm,rbt,rbn;
     public RequestManager mGlideRequestManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,24 +64,36 @@ public class activityPlatos extends AppCompatActivity {
         setContentView(R.layout.activity_platos);
         botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
         iv_image= (ImageView) findViewById(R.id.imageViewPlato);
+        etiqueta= (TextView) findViewById(R.id.tiempoCoccion);
         campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
         campoIngredientes= (EditText) findViewById(R.id.editTextIngredientesPlato);
         campoNombre= (EditText) findViewById(R.id.editTextNombrePlato);
         grupoRadios= (RadioGroup) findViewById(R.id.grupoRadios);
-        tiempoCoccion = (EditText) findViewById(R.id.tiempoCoccion);
         //mGlideRequestManager = Glide.with(this);
         botonRegistrar= (Button) findViewById(R.id.botonRegistrar);
         pickerHorario= (NumberPicker) findViewById(R.id.numberPicker);
         rbt= (CheckBox) findViewById(R.id.tardeRb);
         rbm= (CheckBox) findViewById(R.id.mañanaRb);
         rbn= (CheckBox) findViewById(R.id.nocheRb);
-        horario = getString(R.string.platos_horario);
         cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
         botonEntrada= (RadioButton) findViewById(R.id.radioButton);
         botonPlatoFuerte= (RadioButton) findViewById(R.id.radioButton2);
         pickerHorario.setWrapSelectorWheel(true);
+        //etiqueta.setKeyListener(null);
+        etiqueta.setEnabled(false);
+        if (savedInstanceState != null) {
+            datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
+            datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
+            cuadroDatos.setText(datosrRecuperados);
+            selectedUri= Uri.parse(datosrRecuperados2);
+
+            Glide.with(activityPlatos.this)
+                    .load(selectedUri)
+                    //.placeholder(R.drawable.img_error)
+                    .into(iv_image);
+ }
         cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
-        rbm.setOnClickListener(new View.OnClickListener() {
+    rbm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rbn.setChecked(false);
@@ -95,32 +123,48 @@ public class activityPlatos extends AppCompatActivity {
                 setSingleShowButton();
 
 
+
             }
         });
 
         pickerHorario.setMinValue(1);
         pickerHorario.setMaxValue(14);
+ botonRegistrar.setOnClickListener(new View.OnClickListener() {
+     @Override
+     public void onClick(View view) {
 
-        botonRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
-                cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
-                cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n");
-                if(botonEntrada.isSelected())
-                    cuadroDatos.setText(cuadroDatos.getText() + botonEntrada.getText().toString() + "\n");
-                else if(botonPlatoFuerte.isSelected())
-                    cuadroDatos.setText(cuadroDatos.getText() + botonPlatoFuerte.getText().toString() + "\n");
-                if(rbm.isChecked())
-                    cuadroDatos.setText(cuadroDatos.getText() + horario + ": " + rbm.getText().toString() + "\n");
-                else if(rbn.isChecked())
-                    cuadroDatos.setText(cuadroDatos.getText() + horario + rbn.getText().toString() + "\n");
-                else if(rbt.isChecked())
-                    cuadroDatos.setText(cuadroDatos.getText() + horario + rbt.getText().toString() + "\n");
-                String tiempo = String.valueOf(pickerHorario.getValue());
-                cuadroDatos.setText(cuadroDatos.getText() + tiempoCoccion.getText().toString() + ": " + tiempo + "\n");
-            }
-        });
+             cuadroDatos.setText(cuadroDatos.getText()+"Nombre: "+campoNombre.getText()+"\n");
+         cuadroDatos.setText(cuadroDatos.getText()+"Precio: "+campoPrecio.getText()+"\n");
+         cuadroDatos.setText(cuadroDatos.getText()+"Ingredientes: "+campoIngredientes.getText()+"\n");
+        if(botonEntrada.isSelected())
+         cuadroDatos.setText(cuadroDatos.getText()+"Entrada\n");
+         else if(botonPlatoFuerte.isSelected())
+            cuadroDatos.setText(cuadroDatos.getText()+"Plato Fuerte\n");
+         if(rbm.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"mañana\n");
+         else if(rbn.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"noche\n");
+         else if(rbt.isChecked())
+             cuadroDatos.setText(cuadroDatos.getText()+"Horario: "+"tarde\n");
+         String tiempo;
+         tiempo=String.valueOf(pickerHorario.getValue());
+         cuadroDatos.setText(cuadroDatos.getText()+"Tiempo de preparación: "+tiempo+"\n");
+
+
+
+
+     }
+ });
+
+
+
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        datosrRecuperados= String.valueOf(cuadroDatos.getText());
+        savedInstanceState.putString(RESUME_KEY, datosrRecuperados);
+        savedInstanceState.putString(FOTO_KEY, datosrRecuperados2);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 
@@ -175,6 +219,7 @@ public class activityPlatos extends AppCompatActivity {
                         @Override
                         public void onImageSelected(Uri uri) {
                             selectedUri=uri;
+                            datosrRecuperados2= String.valueOf(selectedUri);
                             Glide.with(activityPlatos.this)
                                     .load(uri)
                                     //.placeholder(R.drawable.img_error)
