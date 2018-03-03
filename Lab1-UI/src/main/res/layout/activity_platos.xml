@@ -43,16 +43,9 @@
         android:id="@+id/nocheRb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
         android:text="@string/checkButton_platos_noche"
-        app:layout_constraintLeft_toLeftOf="@+id/botonGaleriaPlato"
-=======
-        android:text="Noche"
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="10dp"
->>>>>>> fcd181ce7ad5a01ee8e0ef738271ac14785ec214
         app:layout_constraintTop_toBottomOf="@+id/botonGaleriaPlato"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/botonGaleriaPlato"
@@ -62,31 +55,18 @@
         android:id="@+id/mañanaRb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:text="@string/checkButton_platos_mañana"
-        app:layout_constraintHorizontal_bias="0.0"
-=======
-        android:text="Mañana"
         tools:layout_constraintTop_creator="1"
         app:layout_constraintTop_toBottomOf="@+id/nocheRb"
->>>>>>> fcd181ce7ad5a01ee8e0ef738271ac14785ec214
         app:layout_constraintLeft_toLeftOf="@+id/nocheRb"
         app:layout_constraintRight_toRightOf="@+id/nocheRb"
         app:layout_constraintHorizontal_bias="0.0" />
-
-
 
     <CheckBox
         android:id="@+id/tardeRb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:text="@string/checkButton_platos_tarde"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/mañanaRb"
-=======
-        android:text="Tarde"
->>>>>>> fcd181ce7ad5a01ee8e0ef738271ac14785ec214
         app:layout_constraintRight_toRightOf="@+id/mañanaRb"
         app:layout_constraintLeft_toLeftOf="@+id/mañanaRb"
         app:layout_constraintHorizontal_bias="0.0"
@@ -135,9 +115,6 @@
         app:layout_constraintLeft_toLeftOf="@+id/etiqueta"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
-
-
-
 
     <RadioGroup
         android:id="@+id/grupoRadios"
@@ -219,13 +196,7 @@
         android:layout_height="42dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-<<<<<<< HEAD
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/button_platos_guardar"
-=======
-        android:text="Guardar"
->>>>>>> fcd181ce7ad5a01ee8e0ef738271ac14785ec214
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="8dp"
