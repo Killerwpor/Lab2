@@ -2,12 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <item android:id="@+id/platos"
-        android:title="Platos"/>
-    <item android:id="@+id/bebidas"
-        android:title="Bebidas"/>
     <item android:id="@+id/limpiar"
-        android:title="Limpiar"/>
+        android:title="@string/overFlowMenu_limpiar"/>
     <item android:id="@+id/salir"
-        android:title="Salir"/>
+        android:title="@string/overFlowMenu_salir"/>
+    <item android:id="@+id/cambiarIdioma"
+        android:title="@string/overFlowMenu_cambiarIdioma"/>
 </menu>
