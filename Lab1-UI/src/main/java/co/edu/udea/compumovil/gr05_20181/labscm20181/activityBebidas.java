@@ -61,7 +61,7 @@ public class activityBebidas extends AppCompatActivity {
             datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
             cuadroDatos.setText(datosrRecuperados);
-
+            if(datosrRecuperados2!=null)
             selectedUri= Uri.parse(datosrRecuperados2);
             if(selectedUri!=null){
                 Glide.with(activityBebidas.this)

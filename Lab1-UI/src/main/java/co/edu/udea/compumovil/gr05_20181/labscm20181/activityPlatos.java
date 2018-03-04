@@ -82,6 +82,7 @@ public class activityPlatos extends AppCompatActivity {
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
 
             cuadroDatos.setText(datosrRecuperados);
+            if(datosrRecuperados2!=null)
             selectedUri= Uri.parse(datosrRecuperados2);
 if(selectedUri!=null){
 
