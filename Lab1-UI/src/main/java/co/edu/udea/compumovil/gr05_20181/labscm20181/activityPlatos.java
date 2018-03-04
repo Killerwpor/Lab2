@@ -1,6 +1,8 @@
 package co.edu.udea.compumovil.gr05_20181.labscm20181;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.v4.app.NavUtils;
@@ -41,59 +43,55 @@ public class activityPlatos extends AppCompatActivity {
     private Menu menu;
     private Button botonGaleria, botonRegistrar;
     private NumberPicker pickerHorario;
-    private EditText campoPrecio,campoNombre,campoIngredientes;
+    private EditText campoPrecio, campoNombre, campoIngredientes;
     ArrayList<Uri> selectedUriList;
-    private Uri selectedUri=null;
+    private Uri selectedUri = null;
     private ViewGroup mSelectedImagesContainer;
-   private ImageView iv_image;
-    private TextView cuadroDatos,etiqueta;
+    private ImageView iv_image;
+    private TextView cuadroDatos, etiqueta;
     private RadioGroup grupoRadios;
-    private RadioButton botonPlatoFuerte,botonEntrada;
+    private RadioButton botonPlatoFuerte, botonEntrada;
     private static final String RESUME_KEY = "resume";
     private static final String FOTO_KEY = "foto";
     private String datosrRecuperados;
     private String datosrRecuperados2;
-    CheckBox rbm,rbt,rbn;
+    CheckBox rbm, rbt, rbn;
     public RequestManager mGlideRequestManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platos);
-        botonGaleria= (Button) findViewById(R.id.botonGaleriaPlato);
-        iv_image= (ImageView) findViewById(R.id.imageViewPlato);
-        etiqueta= (TextView) findViewById(R.id.tiempoCoccion);
-        campoPrecio= (EditText) findViewById(R.id.editTextPrecioPlato);
-        campoIngredientes= (EditText) findViewById(R.id.editTextIngredientesPlato);
-        campoNombre= (EditText) findViewById(R.id.editTextNombrePlato);
-        grupoRadios= (RadioGroup) findViewById(R.id.grupoRadios);
-        botonRegistrar= (Button) findViewById(R.id.botonRegistrar);
-        pickerHorario= (NumberPicker) findViewById(R.id.numberPicker);
-        rbt= (CheckBox) findViewById(R.id.tardeRb);
-        rbm= (CheckBox) findViewById(R.id.mañanaRb);
-        rbn= (CheckBox) findViewById(R.id.nocheRb);
-        cuadroDatos= (TextView) findViewById(R.id.mostrarDatos);
-        botonEntrada= (RadioButton) findViewById(R.id.radioButton);
-        botonPlatoFuerte= (RadioButton) findViewById(R.id.radioButton2);
+        botonGaleria = (Button) findViewById(R.id.botonGaleriaPlato);
+        iv_image = (ImageView) findViewById(R.id.imageViewPlato);
+        etiqueta = (TextView) findViewById(R.id.tiempoCoccion);
+        campoPrecio = (EditText) findViewById(R.id.editTextPrecioPlato);
+        campoIngredientes = (EditText) findViewById(R.id.editTextIngredientesPlato);
+        campoNombre = (EditText) findViewById(R.id.editTextNombrePlato);
+        grupoRadios = (RadioGroup) findViewById(R.id.grupoRadios);
+        botonRegistrar = (Button) findViewById(R.id.botonRegistrar);
+        pickerHorario = (NumberPicker) findViewById(R.id.numberPicker);
+        rbt = (CheckBox) findViewById(R.id.tardeRb);
+        rbm = (CheckBox) findViewById(R.id.mañanaRb);
+        rbn = (CheckBox) findViewById(R.id.nocheRb);
+        cuadroDatos = (TextView) findViewById(R.id.mostrarDatos);
+        botonEntrada = (RadioButton) findViewById(R.id.radioButton);
+        botonPlatoFuerte = (RadioButton) findViewById(R.id.radioButton2);
         pickerHorario.setWrapSelectorWheel(true);
         etiqueta.setEnabled(false);
         if (savedInstanceState != null) {
-           datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
+            datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
 
             cuadroDatos.setText(datosrRecuperados);
-            if(datosrRecuperados2!=null)
-            selectedUri= Uri.parse(datosrRecuperados2);
-if(selectedUri!=null){
-
-
-    Glide.with(activityPlatos.this)
-            .load(selectedUri)
-            .into(iv_image);
-}
-
-
-
+            if (datosrRecuperados2 != null)
+                selectedUri = Uri.parse(datosrRecuperados2);
+            if (selectedUri != null) {
+                Glide.with(activityPlatos.this)
+                        .load(selectedUri)
+                        .into(iv_image);
+            }
         }
         cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
         rbm.setOnClickListener(new View.OnClickListener() {
@@ -136,28 +134,28 @@ if(selectedUri!=null){
                 cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n");
-                if(botonEntrada.isSelected())
+                if (botonEntrada.isSelected())
                     cuadroDatos.setText(cuadroDatos.getText() + botonEntrada.getText().toString() + "\n");
-                else if(botonPlatoFuerte.isSelected())
+                else if (botonPlatoFuerte.isSelected())
                     cuadroDatos.setText(cuadroDatos.getText() + botonPlatoFuerte.getText().toString() + "\n");
-                if(rbm.isChecked())
+                if (rbm.isChecked())
                     cuadroDatos.setText(cuadroDatos.getText() + "horario" + ": " + rbm.getText().toString() + "\n");
-                else if(rbn.isChecked())
+                else if (rbn.isChecked())
                     cuadroDatos.setText(cuadroDatos.getText() + "horario" + rbn.getText().toString() + "\n");
-                else if(rbt.isChecked())
+                else if (rbt.isChecked())
                     cuadroDatos.setText(cuadroDatos.getText() + "horario" + rbt.getText().toString() + "\n");
                 String tiempo = String.valueOf(pickerHorario.getValue());
                 cuadroDatos.setText(cuadroDatos.getText() + etiqueta.getText().toString() + ": " + tiempo + "\n\n");
-                datosrRecuperados= String.valueOf(cuadroDatos.getText());
+                datosrRecuperados = String.valueOf(cuadroDatos.getText());
+                guardarPreferencias(cuadroDatos.getText().toString());
             }
         });
-
-
-
+        cargarPreferencias(cuadroDatos);
     }
+
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        datosrRecuperados= String.valueOf(cuadroDatos.getText());
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        datosrRecuperados = String.valueOf(cuadroDatos.getText());
         savedInstanceState.putString(RESUME_KEY, datosrRecuperados);
         savedInstanceState.putString(FOTO_KEY, datosrRecuperados2);
         super.onSaveInstanceState(savedInstanceState);
@@ -172,7 +170,7 @@ if(selectedUri!=null){
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         this.menu = menu;
         menu.getItem(2).setVisible(false);
@@ -180,13 +178,13 @@ if(selectedUri!=null){
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem opcionMenu){
+    public boolean onOptionsItemSelected(MenuItem opcionMenu) {
         int id = opcionMenu.getItemId();
-        if(id == R.id.limpiar){
+        if (id == R.id.limpiar) {
             cuadroDatos.setText("");
-        } else if(id == R.id.salir){
+        } else if (id == R.id.salir) {
             System.exit(1);
-        } else if(id == android.R.id.home){
+        } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
         }
         return true;
@@ -199,8 +197,8 @@ if(selectedUri!=null){
                     .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                         @Override
                         public void onImageSelected(Uri uri) {
-                            selectedUri=uri;
-                            datosrRecuperados2= String.valueOf(selectedUri);
+                            selectedUri = uri;
+                            datosrRecuperados2 = String.valueOf(selectedUri);
                             Glide.with(activityPlatos.this)
                                     .load(uri)
                                     .into(iv_image);
@@ -216,6 +214,16 @@ if(selectedUri!=null){
         }
     };
 
+    private void guardarPreferencias(String campoDato) {
+        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Platos", campoDato);
+        editor.commit();
+    }
 
-
+    private void cargarPreferencias(TextView campoDato) {
+        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        String dato = preferences.getString("Platos", "");
+        campoDato.setText(dato);
+    }
 }

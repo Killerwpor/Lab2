@@ -1,7 +1,9 @@
 package co.edu.udea.compumovil.gr05_20181.labscm20181;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -35,8 +37,8 @@ public class activityBebidas extends AppCompatActivity {
 
     private static final String RESUME_KEY = "resume";
     private static final String FOTO_KEY = "foto";
-    private String datosrRecuperados,datosrRecuperados2;
-    private Uri selectedUri=null;
+    private String datosrRecuperados, datosrRecuperados2;
+    private Uri selectedUri = null;
     private ImageView iv_image;
     private EditText campoNombre, campoPrecio, campoIngredientes;
     private Button botonGaleria, botonRegistrar;
@@ -55,23 +57,20 @@ public class activityBebidas extends AppCompatActivity {
         botonGaleria = (Button) findViewById(R.id.botonGaleriaBebida);
         botonRegistrar = (Button) findViewById(R.id.botonRegistrarBebidas);
         cuadroDatos = (TextView) findViewById(R.id.cuadroDatos);
-        iv_image= (ImageView) findViewById(R.id.imageViewBebida);
-
+        iv_image = (ImageView) findViewById(R.id.imageViewBebida);
         if (savedInstanceState != null) {
             datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
+
             cuadroDatos.setText(datosrRecuperados);
-            if(datosrRecuperados2!=null)
-            selectedUri= Uri.parse(datosrRecuperados2);
-            if(selectedUri!=null){
+            if (datosrRecuperados2 != null)
+                selectedUri = Uri.parse(datosrRecuperados2);
+            if (selectedUri != null) {
                 Glide.with(activityBebidas.this)
                         .load(selectedUri)
                         .into(iv_image);
             }
-
         }
-
-
         cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +84,15 @@ public class activityBebidas extends AppCompatActivity {
                 cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n\n");
+                datosrRecuperados = String.valueOf(cuadroDatos.getText());
+                guardarPreferencias(cuadroDatos.getText().toString());
             }
         });
+        cargarPreferencias(cuadroDatos);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         this.menu = menu;
         menu.getItem(2).setVisible(false);
@@ -98,27 +100,27 @@ public class activityBebidas extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem opcionMenu){
+    public boolean onOptionsItemSelected(MenuItem opcionMenu) {
         int id = opcionMenu.getItemId();
-        if(id == R.id.limpiar){
+        if (id == R.id.limpiar) {
             cuadroDatos.setText("");
-        } else if(id == R.id.salir){
+        } else if (id == R.id.salir) {
             System.exit(1);
-        } else if(id == android.R.id.home){
+        } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
         }
         return true;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        datosrRecuperados= String.valueOf(cuadroDatos.getText());
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        datosrRecuperados = String.valueOf(cuadroDatos.getText());
         savedInstanceState.putString(RESUME_KEY, datosrRecuperados);
         savedInstanceState.putString(FOTO_KEY, datosrRecuperados2);
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    public void setLanguage(String lang){
+    public void setLanguage(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -142,8 +144,8 @@ public class activityBebidas extends AppCompatActivity {
                     .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                         @Override
                         public void onImageSelected(Uri uri) {
-                            selectedUri=uri;
-                            datosrRecuperados2= String.valueOf(selectedUri);
+                            selectedUri = uri;
+                            datosrRecuperados2 = String.valueOf(selectedUri);
                             Glide.with(activityBebidas.this)
                                     .load(uri)
                                     .into(iv_image);
@@ -158,4 +160,17 @@ public class activityBebidas extends AppCompatActivity {
             Toast.makeText(activityBebidas.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
     };
+
+    private void guardarPreferencias(String campoDato){
+        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Bebidas", campoDato);
+        editor.commit();
+    }
+
+    private void cargarPreferencias(TextView campoDato){
+        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        String dato = preferences.getString("Bebidas", "");
+        campoDato.setText(dato);
+    }
 }
