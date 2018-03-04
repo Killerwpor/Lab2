@@ -36,7 +36,7 @@ public class activityBebidas extends AppCompatActivity {
     private static final String RESUME_KEY = "resume";
     private static final String FOTO_KEY = "foto";
     private String datosrRecuperados,datosrRecuperados2;
-    private Uri selectedUri;
+    private Uri selectedUri=null;
     private ImageView iv_image;
     private EditText campoNombre, campoPrecio, campoIngredientes;
     private Button botonGaleria, botonRegistrar;
@@ -56,15 +56,22 @@ public class activityBebidas extends AppCompatActivity {
         botonRegistrar = (Button) findViewById(R.id.botonRegistrarBebidas);
         cuadroDatos = (TextView) findViewById(R.id.cuadroDatos);
         iv_image= (ImageView) findViewById(R.id.imageViewBebida);
+
         if (savedInstanceState != null) {
             datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
             cuadroDatos.setText(datosrRecuperados);
+
             selectedUri= Uri.parse(datosrRecuperados2);
-            Glide.with(activityBebidas.this)
-                    .load(selectedUri)
-                    .into(iv_image);
+            if(selectedUri!=null){
+                Glide.with(activityBebidas.this)
+                        .load(selectedUri)
+                        .into(iv_image);
+            }
+
         }
+
+
         cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override

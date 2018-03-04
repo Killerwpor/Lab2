@@ -43,7 +43,7 @@ public class activityPlatos extends AppCompatActivity {
     private NumberPicker pickerHorario;
     private EditText campoPrecio,campoNombre,campoIngredientes;
     ArrayList<Uri> selectedUriList;
-    private Uri selectedUri;
+    private Uri selectedUri=null;
     private ViewGroup mSelectedImagesContainer;
    private ImageView iv_image;
     private TextView cuadroDatos,etiqueta;
@@ -78,13 +78,21 @@ public class activityPlatos extends AppCompatActivity {
         pickerHorario.setWrapSelectorWheel(true);
         etiqueta.setEnabled(false);
         if (savedInstanceState != null) {
-            datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
+           datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
+
             cuadroDatos.setText(datosrRecuperados);
             selectedUri= Uri.parse(datosrRecuperados2);
-            Glide.with(activityPlatos.this)
-                    .load(selectedUri)
-                    .into(iv_image);
+if(selectedUri!=null){
+
+
+    Glide.with(activityPlatos.this)
+            .load(selectedUri)
+            .into(iv_image);
+}
+
+
+
         }
         cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
         rbm.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +147,7 @@ public class activityPlatos extends AppCompatActivity {
                     cuadroDatos.setText(cuadroDatos.getText() + "horario" + rbt.getText().toString() + "\n");
                 String tiempo = String.valueOf(pickerHorario.getValue());
                 cuadroDatos.setText(cuadroDatos.getText() + etiqueta.getText().toString() + ": " + tiempo + "\n\n");
+                datosrRecuperados= String.valueOf(cuadroDatos.getText());
             }
         });
 
