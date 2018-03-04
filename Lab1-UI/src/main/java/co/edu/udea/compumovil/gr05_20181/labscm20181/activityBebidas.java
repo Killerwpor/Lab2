@@ -1,5 +1,6 @@
 package co.edu.udea.compumovil.gr05_20181.labscm20181;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -7,27 +8,39 @@ import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Locale;
+
+import gun0912.tedbottompicker.TedBottomPicker;
 
 public class activityBebidas extends AppCompatActivity {
 
     private Menu menu;
-    private String current_language;
+
     private static final String RESUME_KEY = "resume";
     private static final String FOTO_KEY = "foto";
     private String datosrRecuperados,datosrRecuperados2;
-    private TextView cuadroDatos;
     private Uri selectedUri;
     private ImageView iv_image;
+    private EditText campoNombre, campoPrecio, campoIngredientes;
+    private Button botonGaleria, botonRegistrar;
+    private TextView cuadroDatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +49,37 @@ public class activityBebidas extends AppCompatActivity {
         setLanguage(lang);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bebidas);
-        cuadroDatos= (TextView) findViewById(R.id.cuadroDatos);
+        campoNombre = (EditText) findViewById(R.id.editTextNombreBebida);
+        campoPrecio = (EditText) findViewById(R.id.editTextPrecioBebida);
+        campoIngredientes = (EditText) findViewById(R.id.editTextIngredientesBebida);
+        botonGaleria = (Button) findViewById(R.id.botonGaleriaBebida);
+        botonRegistrar = (Button) findViewById(R.id.botonRegistrarBebidas);
+        cuadroDatos = (TextView) findViewById(R.id.cuadroDatos);
         iv_image= (ImageView) findViewById(R.id.imageViewBebida);
         if (savedInstanceState != null) {
             datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
             cuadroDatos.setText(datosrRecuperados);
             selectedUri= Uri.parse(datosrRecuperados2);
-
             Glide.with(activityBebidas.this)
                     .load(selectedUri)
-
                     .into(iv_image);
         }
-
+        cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
+        botonGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setSingleShowButton();
+            }
+        });
+        botonRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
+                cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
+                cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n\n");
+            }
+        });
     }
 
     @Override
@@ -64,7 +94,7 @@ public class activityBebidas extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem opcionMenu){
         int id = opcionMenu.getItemId();
         if(id == R.id.limpiar){
-
+            cuadroDatos.setText("");
         } else if(id == R.id.salir){
             System.exit(1);
         } else if(id == android.R.id.home){
@@ -72,6 +102,7 @@ public class activityBebidas extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         datosrRecuperados= String.valueOf(cuadroDatos.getText());
@@ -88,4 +119,36 @@ public class activityBebidas extends AppCompatActivity {
         Resources resources = getResources();
         resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
+
+    private void setSingleShowButton() {
+        TedPermission.with(activityBebidas.this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("Debe aceptar los permisos")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check();
+    }
+
+    PermissionListener permissionlistener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(activityBebidas.this)
+                    .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
+                        @Override
+                        public void onImageSelected(Uri uri) {
+                            selectedUri=uri;
+                            datosrRecuperados2= String.valueOf(selectedUri);
+                            Glide.with(activityBebidas.this)
+                                    .load(uri)
+                                    .into(iv_image);
+                        }
+                    })
+                    .create();
+            tedBottomPicker.show(getSupportFragmentManager());
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            Toast.makeText(activityBebidas.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+        }
+    };
 }
