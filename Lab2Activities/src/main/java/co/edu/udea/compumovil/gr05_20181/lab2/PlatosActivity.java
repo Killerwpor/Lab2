@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import gun0912.tedbottompicker.TedBottomPicker;
 
-public class activityPlatos extends AppCompatActivity {
+public class PlatosActivity extends AppCompatActivity {
     private Menu menu;
     private Button botonGaleria, botonRegistrar;
     private NumberPicker pickerHorario;
@@ -52,7 +52,6 @@ public class activityPlatos extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platos);
         botonGaleria = (Button) findViewById(R.id.botonGaleriaPlato);
@@ -80,7 +79,7 @@ public class activityPlatos extends AppCompatActivity {
             if (datosrRecuperados2 != null)
                 selectedUri = Uri.parse(datosrRecuperados2);
             if (selectedUri != null) {
-                Glide.with(activityPlatos.this)
+                Glide.with(PlatosActivity.this)
                         .load(selectedUri)
                         .into(iv_image);
             }
@@ -154,7 +153,7 @@ public class activityPlatos extends AppCompatActivity {
     }
 
     private void setSingleShowButton() {
-        TedPermission.with(activityPlatos.this)
+        TedPermission.with(PlatosActivity.this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("Debe aceptar los permisos")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -185,13 +184,13 @@ public class activityPlatos extends AppCompatActivity {
     PermissionListener permissionlistener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
-            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(activityPlatos.this)
+            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(PlatosActivity.this)
                     .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                         @Override
                         public void onImageSelected(Uri uri) {
                             selectedUri = uri;
                             datosrRecuperados2 = String.valueOf(selectedUri);
-                            Glide.with(activityPlatos.this)
+                            Glide.with(PlatosActivity.this)
                                     .load(uri)
                                     .into(iv_image);
                         }
@@ -202,7 +201,7 @@ public class activityPlatos extends AppCompatActivity {
 
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-            Toast.makeText(activityPlatos.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(PlatosActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
     };
 

@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +29,7 @@ import java.util.Locale;
 
 import gun0912.tedbottompicker.TedBottomPicker;
 
-public class activityBebidas extends AppCompatActivity {
+public class BebidasActivity extends AppCompatActivity {
 
     private Menu menu;
 
@@ -44,9 +44,6 @@ public class activityBebidas extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        String lang = intent.getStringExtra("lang");
-        setLanguage(lang);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bebidas);
         campoNombre = (EditText) findViewById(R.id.editTextNombreBebida);
@@ -64,7 +61,7 @@ public class activityBebidas extends AppCompatActivity {
             if (datosrRecuperados2 != null)
                 selectedUri = Uri.parse(datosrRecuperados2);
             if (selectedUri != null) {
-                Glide.with(activityBebidas.this)
+                Glide.with(BebidasActivity.this)
                         .load(selectedUri)
                         .into(iv_image);
             }
@@ -128,7 +125,7 @@ public class activityBebidas extends AppCompatActivity {
     }
 
     private void setSingleShowButton() {
-        TedPermission.with(activityBebidas.this)
+        TedPermission.with(BebidasActivity.this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("Debe aceptar los permisos")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -138,13 +135,13 @@ public class activityBebidas extends AppCompatActivity {
     PermissionListener permissionlistener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
-            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(activityBebidas.this)
+            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(BebidasActivity.this)
                     .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                         @Override
                         public void onImageSelected(Uri uri) {
                             selectedUri = uri;
                             datosrRecuperados2 = String.valueOf(selectedUri);
-                            Glide.with(activityBebidas.this)
+                            Glide.with(BebidasActivity.this)
                                     .load(uri)
                                     .into(iv_image);
                         }
@@ -155,7 +152,7 @@ public class activityBebidas extends AppCompatActivity {
 
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-            Toast.makeText(activityBebidas.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(BebidasActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -171,4 +168,5 @@ public class activityBebidas extends AppCompatActivity {
         String dato = preferences.getString("Bebidas", "");
         campoDato.setText(dato);
     }
+
 }

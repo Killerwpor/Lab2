@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(getApplicationContext(), BebidasActivity.class);
+        startActivity(intent);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,22 +90,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Intent intent = new Intent(this, BebidasActivity.class);
         int id = item.getItemId();
 
         if (id == R.id.nav_bebidas) {
-
+            intent = new Intent(this, BebidasActivity.class);
         } else if (id == R.id.nav_platos) {
-
+            intent = new Intent(this, PlatosActivity.class);
         } else if (id == R.id.nav_perfil) {
-
+            //actividad = new Intent(this, activityPerfil.class);
         } else if (id == R.id.nav_acerca) {
-
+            //actividad = new Intent(this, activityAcerca.class);
         } else if (id == R.id.nav_configuracion) {
-
+            //actividad = new Intent(this,
         } else if (id == R.id.nav_cerrar_sesion) {
 
         }
-
+        if(intent != null) {
+            startActivity(intent);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

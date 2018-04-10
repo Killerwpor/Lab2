@@ -1,14 +1,14 @@
 package co.edu.udea.compumovil.gr05_20181.lab2;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.WindowManager;
 
-public class activitySplash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
-    private final int splash_duration = 2000;
+    private final int splash_duration = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class activitySplash extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         new Handler().postDelayed(new Runnable(){
             public void run(){
-                Intent intent = new Intent(activitySplash.this, MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BebidasActivity.class);
                 startActivity(intent);
                 finish();
             };
