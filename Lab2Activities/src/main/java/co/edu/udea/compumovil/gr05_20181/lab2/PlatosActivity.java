@@ -142,7 +142,7 @@ public class PlatosActivity extends AppCompatActivity {
                 tiempo = String.valueOf(pickerHorario.getValue());
                 plato plato = new plato(nombre, horario, tipo, tiempo, foto, Float.valueOf(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
-                //db.guardarBebida(bebida);
+                db.guardarPlato(plato);
                 /*cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n");
