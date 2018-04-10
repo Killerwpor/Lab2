@@ -28,12 +28,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(getApplicationContext(), BebidasActivity.class);
-        startActivity(intent);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,21 +86,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Intent intent = new Intent(this, BebidasActivity.class);
+        Intent intent = null;
         int id = item.getItemId();
 
         if (id == R.id.nav_bebidas) {
-            intent = new Intent(this, BebidasActivity.class);
+            intent = new Intent(getApplicationContext(), BebidasActivity.class);
         } else if (id == R.id.nav_platos) {
-            intent = new Intent(this, PlatosActivity.class);
+            intent = new Intent(getApplicationContext(), PlatosActivity.class);
         } else if (id == R.id.nav_perfil) {
-            //actividad = new Intent(this, activityPerfil.class);
+            //intent = new Intent(getApplicationContext(), PerfilActivity.class);
         } else if (id == R.id.nav_acerca) {
-            //actividad = new Intent(this, activityAcerca.class);
+            //intent = new Intent(getApplicationContext(), AcercaActivity.class);
         } else if (id == R.id.nav_configuracion) {
-            //actividad = new Intent(this,
+            //intent = new Intent(getApplicationContext(), ConfiguracionActivity.class);
         } else if (id == R.id.nav_cerrar_sesion) {
-
+            //intent = new Intent(getApplicationContext(), CerrarSesionActivity.class);
         }
         if(intent != null) {
             startActivity(intent);

@@ -99,6 +99,8 @@ public class BebidasActivity extends AppCompatActivity {
         int id = opcionMenu.getItemId();
         if (id == R.id.limpiar) {
             cuadroDatos.setText("");
+            campoNombre.setText("");
+            campoIngredientes.setText("");
         } else if (id == R.id.salir) {
             System.exit(1);
         } else if (id == android.R.id.home) {
