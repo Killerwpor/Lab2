@@ -28,4 +28,10 @@
     <string name="overFlowMenu_limpiar">Limpiar</string>
     <string name="overFlowMenu_salir">Salir</string>
     <string name="overFlowMenu_cambiarIdioma">Cambiar Idioma</string>
+    <string name="bebidas">Bebidas</string>
+    <string name="platos">Platos</string>
+    <string name="perfil">Perfil</string>
+    <string name="acerca">Acerca De</string>
+    <string name="configuracion">Configuración</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
 </resources>
