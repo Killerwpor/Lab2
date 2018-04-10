@@ -12,9 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Menu menu;
+    private Button botonBebidas;
+    private Button botonPlatos;
+    private String current_language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
