@@ -13,11 +13,11 @@ public class bebida {
     private Float precio;
     private String ingredientes;
 
-   public bebida(String f, String n, Float p, String i){
-       this.setFoto(f);
-       this.setNombre(n);
-       this.setPrecio(p);
-       this.setIngredientes(i);
+   public bebida(String nomb, String fot, Float pre, String ingre){
+       this.setNombre(nomb);
+       this.setFoto(fot);
+       this.setPrecio(pre);
+       this.setIngredientes(ingre);
    }
 
 

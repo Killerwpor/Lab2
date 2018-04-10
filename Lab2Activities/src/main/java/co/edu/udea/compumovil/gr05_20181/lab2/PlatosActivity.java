@@ -125,11 +125,22 @@ public class PlatosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String foto = "1";
-                String nombre, precio, ingredientes;
+                String nombre, precio, ingredientes, horario = null, tipo = null, tiempo;
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());
                 ingredientes = String.valueOf(campoIngredientes.getText());
-                //plato plato = new plato(datosrRecuperados, nombre, Float.parseFloat(precio), ingredientes);
+                if (botonEntrada.isSelected())
+                    tipo = botonEntrada.getText().toString();
+                else if (botonPlatoFuerte.isSelected())
+                    tipo = botonPlatoFuerte.getText().toString();
+                if (rbm.isChecked())
+                    horario = "Horario: " + rbm.getText().toString();
+                else if (rbn.isChecked())
+                    horario = "Horario: " + rbn.getText().toString();
+                else if (rbt.isChecked())
+                    horario = "Horario: " + rbt.getText().toString();
+                tiempo = String.valueOf(pickerHorario.getValue());
+                plato plato = new plato(nombre, horario, tipo, tiempo, foto, Float.valueOf(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 //db.guardarBebida(bebida);
                 /*cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");

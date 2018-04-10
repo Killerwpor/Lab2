@@ -83,7 +83,7 @@ public class BebidasActivity extends AppCompatActivity {
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());
                 ingredientes = String.valueOf(campoIngredientes.getText());
-                bebida bebida = new bebida(datosrRecuperados, nombre, Float.parseFloat(precio), ingredientes);
+                bebida bebida = new bebida(nombre, datosrRecuperados, Float.parseFloat(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarBebida(bebida);
                 /*cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
