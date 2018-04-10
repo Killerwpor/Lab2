@@ -1,19 +1,15 @@
 package co.edu.udea.compumovil.gr05_20181.lab2;
 
 import android.Manifest;
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -21,12 +17,9 @@ import java.util.ArrayList;
 
 import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
 import co.edu.udea.compumovil.gr05_20181.lab2.data.usuario;
-import co.edu.udea.compumovil.gr05_20181.lab2.data.usuarioContract;
 import gun0912.tedbottompicker.TedBottomPicker;
 
-import static android.util.Log.println;
-
-public class Registro extends AppCompatActivity {
+public class RegistroActivity extends AppCompatActivity {
 
     private ImageButton botonImagen;
     private Button botonGuardar;
@@ -74,7 +67,7 @@ public class Registro extends AppCompatActivity {
     }
 
     private void setSingleShowButton() {
-        TedPermission.with(Registro.this)
+        TedPermission.with(RegistroActivity.this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("Debe aceptar los permisos")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -84,7 +77,7 @@ public class Registro extends AppCompatActivity {
     PermissionListener permissionlistener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
-            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(Registro.this)
+            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(RegistroActivity.this)
                     .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                         @Override
                         public void onImageSelected(Uri uri) {
@@ -102,7 +95,7 @@ public class Registro extends AppCompatActivity {
 
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-            Toast.makeText(Registro.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistroActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
     };
 

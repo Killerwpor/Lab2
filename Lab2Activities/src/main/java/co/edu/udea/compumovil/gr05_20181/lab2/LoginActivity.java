@@ -61,11 +61,20 @@ public class LoginActivity extends AppCompatActivity{
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mLogin = (Button) findViewById(R.id.login_ingresar);
+        mLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin(view);
+            }
+        });
+
+        Button mRegistro = (Button) findViewById(R.id.login_registrar);
+        mRegistro.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RegistroActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -82,7 +91,7 @@ public class LoginActivity extends AppCompatActivity{
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//correo ss contraseña: d
+        //correo ss contraseña: d
         Cursor c=db.getLawyerById(email,password);
         Boolean comprobacion=c.moveToNext();
         if (comprobacion) {

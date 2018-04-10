@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".Registro" />
+        <activity android:name=".RegistroActivity" />
         <activity
             android:name=".BebidasActivity"
             android:parentActivityName=".MainActivity"
