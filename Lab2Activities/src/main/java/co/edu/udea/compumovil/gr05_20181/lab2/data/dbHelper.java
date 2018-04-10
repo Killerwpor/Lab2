@@ -2,6 +2,7 @@ package co.edu.udea.compumovil.gr05_20181.lab2.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -80,6 +81,20 @@ public class dbHelper extends SQLiteOpenHelper {
                 null,
                 beb.toContentValues());
 
+    }
+
+    public Cursor getLawyerById(String correo, String contraseña) {
+        String columns[] = new String[]{usuarioContract.usuarioEntry.CORREO,usuarioContract.usuarioEntry.CONTRASEÑA};
+        String columns2[] = new String[]{correo,contraseña};
+        Cursor c = getReadableDatabase().query(
+                usuarioContract.usuarioEntry.TABLE_NAME,
+                columns,
+                usuarioContract.usuarioEntry.CORREO + " LIKE ? AND "+usuarioContract.usuarioEntry.CONTRASEÑA + " LIKE ?",
+                columns2,
+                null,
+                null,
+                null);
+        return c;
     }
 
 }

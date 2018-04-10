@@ -1,6 +1,7 @@
 package co.edu.udea.compumovil.gr05_20181.lab2.data;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 public class usuario {
 
@@ -59,6 +60,8 @@ public class usuario {
         values.put(usuarioContract.usuarioEntry.CONTRASEÑA, contraseña);
         return values;
     }
+
+
 
 
     public String getApellido() {

@@ -33,6 +33,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -74,14 +76,16 @@ public class LoginActivity extends AppCompatActivity{
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin(View view) {
+        dbHelper db=new dbHelper(getApplicationContext());
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-        // Check fif the user entered a password.
-        if (email.equals("usuario") && password.equals("c")) {
+//correo ss contraseña: d
+        Cursor c=db.getLawyerById(email,password);
+        Boolean comprobacion=c.moveToNext();
+        if (comprobacion) {
             intent.putExtra("Usuario", email);
             startActivity(intent);
         } else {
