@@ -30,6 +30,7 @@ public class Registro extends AppCompatActivity {
 
     private ImageButton botonImagen;
     private Button botonGuardar;
+    String datosRecuperados;
     private EditText campoNombre, campoApellido, campoContraseña,campoCorreo;
 
 
@@ -50,7 +51,8 @@ public class Registro extends AppCompatActivity {
        botonGuardar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               String foto="test";
+
+               String foto=datosRecuperados;
                String nombre, correo, contraseña, apellido;
                nombre= String.valueOf(campoNombre.getText());
                apellido= String.valueOf(campoApellido.getText());
@@ -62,8 +64,47 @@ public class Registro extends AppCompatActivity {
            }
        });
 
+       botonImagen.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               setSingleShowButton();
+           }
+       });
 
     }
+
+    private void setSingleShowButton() {
+        TedPermission.with(Registro.this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("Debe aceptar los permisos")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check();
+    }
+
+    PermissionListener permissionlistener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(Registro.this)
+                    .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
+                        @Override
+                        public void onImageSelected(Uri uri) {
+                           Uri selectedUri = uri;
+                            datosRecuperados = String.valueOf(selectedUri);
+                         /*   Glide.with(BebidasActivity.this)
+                                    .load(uri)
+                                    .into(iv_image);
+                                    */
+                        }
+                    })
+                    .create();
+            tedBottomPicker.show(getSupportFragmentManager());
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            Toast.makeText(Registro.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+        }
+    };
 
 
 }

@@ -29,6 +29,8 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.plato;
+import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class PlatosActivity extends AppCompatActivity {
@@ -122,7 +124,15 @@ public class PlatosActivity extends AppCompatActivity {
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
+                String foto = "1";
+                String nombre, precio, ingredientes;
+                nombre = String.valueOf(campoNombre.getText());
+                precio = String.valueOf(campoPrecio.getText());
+                ingredientes = String.valueOf(campoIngredientes.getText());
+                //plato plato = new plato(datosrRecuperados, nombre, Float.parseFloat(precio), ingredientes);
+                dbHelper db = new dbHelper(getApplicationContext());
+                //db.guardarBebida(bebida);
+                /*cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n");
                 if (botonEntrada.isSelected())
@@ -138,7 +148,7 @@ public class PlatosActivity extends AppCompatActivity {
                 String tiempo = String.valueOf(pickerHorario.getValue());
                 cuadroDatos.setText(cuadroDatos.getText() + etiqueta.getText().toString() + ": " + tiempo + "\n\n");
                 datosrRecuperados = String.valueOf(cuadroDatos.getText());
-                guardarPreferencias(cuadroDatos.getText().toString());
+                guardarPreferencias(cuadroDatos.getText().toString());*/
             }
         });
         cargarPreferencias(cuadroDatos);

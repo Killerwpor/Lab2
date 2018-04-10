@@ -27,6 +27,8 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.bebida;
+import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class BebidasActivity extends AppCompatActivity {
@@ -76,12 +78,19 @@ public class BebidasActivity extends AppCompatActivity {
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
+                String foto = "1";
+                String nombre, precio, ingredientes;
+                nombre = String.valueOf(campoNombre.getText());
+                precio = String.valueOf(campoPrecio.getText());
+                ingredientes = String.valueOf(campoIngredientes.getText());
+                bebida bebida = new bebida(datosrRecuperados, nombre, Float.parseFloat(precio), ingredientes);
+                dbHelper db = new dbHelper(getApplicationContext());
+                db.guardarBebida(bebida);
+                /*cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
                 cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n\n");
                 datosrRecuperados = String.valueOf(cuadroDatos.getText());
-                guardarPreferencias(cuadroDatos.getText().toString());
+                guardarPreferencias(cuadroDatos.getText().toString());*/
             }
         });
         cargarPreferencias(cuadroDatos);

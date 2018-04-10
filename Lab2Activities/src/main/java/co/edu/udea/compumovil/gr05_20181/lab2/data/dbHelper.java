@@ -36,6 +36,13 @@ public class dbHelper extends SQLiteOpenHelper {
                 + platoContract.platoEntry.TIPO + " TEXT NOT NULL,"
                 + "UNIQUE (" + platoContract.platoEntry._ID+ "))");
 
+        sqLiteDatabase.execSQL("CREATE TABLE " + bebidaContract.bebidaEntry.TABLE_NAME + " ("
+                + bebidaContract.bebidaEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + bebidaContract.bebidaEntry.NOMBRE + " TEXT NOT NULL,"
+                + bebidaContract.bebidaEntry.FOTO + " TEXT NOT NULL,"
+                + bebidaContract.bebidaEntry.INGREDIENTES + " TEXT NOT NULL,"
+                + bebidaContract.bebidaEntry.PRECIO + " FLOAT NOT NULL,"
+                + "UNIQUE (" + platoContract.platoEntry._ID+ "))");
 
     }
 
@@ -62,6 +69,16 @@ public class dbHelper extends SQLiteOpenHelper {
                 platoContract.platoEntry.TABLE_NAME,
                 null,
                 plat.toContentValues());
+
+    }
+
+    public long guardarBebida(bebida beb) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        return sqLiteDatabase.insert(
+                platoContract.platoEntry.TABLE_NAME,
+                null,
+                beb.toContentValues());
 
     }
 
