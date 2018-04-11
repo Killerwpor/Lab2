@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import co.edu.udea.compumovil.gr05_20181.lab2.data.bebida;
@@ -42,7 +45,9 @@ public class BebidasActivity extends AppCompatActivity {
     private ImageView iv_image;
     private EditText campoNombre, campoPrecio, campoIngredientes;
     private Button botonGaleria, botonRegistrar;
-    private TextView cuadroDatos;
+    private RecyclerView recyclerViewBebida;
+    private RecyclerViewAdapterBebida adaptadorBebida;
+    private bebida bebida = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +58,10 @@ public class BebidasActivity extends AppCompatActivity {
         campoIngredientes = (EditText) findViewById(R.id.editTextIngredientesBebida);
         botonGaleria = (Button) findViewById(R.id.botonGaleriaBebida);
         botonRegistrar = (Button) findViewById(R.id.botonRegistrarBebidas);
-        cuadroDatos = (TextView) findViewById(R.id.cuadroDatos);
         iv_image = (ImageView) findViewById(R.id.imageViewBebida);
         if (savedInstanceState != null) {
             datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
-
-            cuadroDatos.setText(datosrRecuperados);
             if (datosrRecuperados2 != null)
                 selectedUri = Uri.parse(datosrRecuperados2);
             if (selectedUri != null) {
@@ -68,7 +70,6 @@ public class BebidasActivity extends AppCompatActivity {
                         .into(iv_image);
             }
         }
-        cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,17 +84,15 @@ public class BebidasActivity extends AppCompatActivity {
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());
                 ingredientes = String.valueOf(campoIngredientes.getText());
-                bebida bebida = new bebida(nombre, "FOTO TEST", Float.parseFloat(precio), ingredientes);
+                bebida = new bebida(nombre, "FOTO TEST", Float.parseFloat(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarBebida(bebida);
-                /*cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
-                cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
-                cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n\n");
-                datosrRecuperados = String.valueOf(cuadroDatos.getText());
-                guardarPreferencias(cuadroDatos.getText().toString());*/
+                recyclerViewBebida = (RecyclerView) findViewById(R.id.recycler_bebidas);
+                recyclerViewBebida.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                adaptadorBebida = new RecyclerViewAdapterBebida(obtenerBebidas());
+                recyclerViewBebida.setAdapter(adaptadorBebida);
             }
         });
-        cargarPreferencias(cuadroDatos);
     }
 
     @Override
@@ -108,7 +107,6 @@ public class BebidasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem opcionMenu) {
         int id = opcionMenu.getItemId();
         if (id == R.id.limpiar) {
-            cuadroDatos.setText("");
             campoNombre.setText("");
             campoIngredientes.setText("");
         } else if (id == R.id.salir) {
@@ -121,7 +119,6 @@ public class BebidasActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        datosrRecuperados = String.valueOf(cuadroDatos.getText());
         savedInstanceState.putString(RESUME_KEY, datosrRecuperados);
         savedInstanceState.putString(FOTO_KEY, datosrRecuperados2);
         super.onSaveInstanceState(savedInstanceState);
@@ -179,6 +176,14 @@ public class BebidasActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         String dato = preferences.getString("Bebidas", "");
         campoDato.setText(dato);
+    }
+
+    private List<bebida> obtenerBebidas(){
+        List<bebida> bebidas = new ArrayList<>();
+        if(bebida != null){
+            bebidas.add(bebida);
+        }
+        return bebidas;
     }
 
 }

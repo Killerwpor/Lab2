@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.udea.compumovil.gr05_20181.lab2.data.plato;
 import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
@@ -42,7 +45,7 @@ public class PlatosActivity extends AppCompatActivity {
     private Uri selectedUri = null;
     private ViewGroup mSelectedImagesContainer;
     private ImageView iv_image;
-    private TextView cuadroDatos, etiqueta;
+    private TextView etiqueta;
     private RadioGroup grupoRadios;
     private RadioButton botonPlatoFuerte, botonEntrada;
     private static final String RESUME_KEY = "resume";
@@ -50,7 +53,9 @@ public class PlatosActivity extends AppCompatActivity {
     private String datosrRecuperados;
     private String datosrRecuperados2;
     CheckBox rbm, rbt, rbn;
-    public RequestManager mGlideRequestManager;
+    private RecyclerView recyclerViewPlato;
+    private RecyclerViewAdapterPlato adaptadorPlato;
+    private plato plato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +73,6 @@ public class PlatosActivity extends AppCompatActivity {
         rbt = (CheckBox) findViewById(R.id.tardeRb);
         rbm = (CheckBox) findViewById(R.id.mañanaRb);
         rbn = (CheckBox) findViewById(R.id.nocheRb);
-        cuadroDatos = (TextView) findViewById(R.id.mostrarDatos);
         botonEntrada = (RadioButton) findViewById(R.id.radioButton);
         botonPlatoFuerte = (RadioButton) findViewById(R.id.radioButton2);
         pickerHorario.setWrapSelectorWheel(true);
@@ -76,8 +80,6 @@ public class PlatosActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
-
-            cuadroDatos.setText(datosrRecuperados);
             if (datosrRecuperados2 != null)
                 selectedUri = Uri.parse(datosrRecuperados2);
             if (selectedUri != null) {
@@ -86,7 +88,7 @@ public class PlatosActivity extends AppCompatActivity {
                         .into(iv_image);
             }
         }
-        cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
+        ////////////////////////////cuadroDatos.setMovementMethod(new ScrollingMovementMethod());
         rbm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,45 +131,30 @@ public class PlatosActivity extends AppCompatActivity {
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());
                 ingredientes = String.valueOf(campoIngredientes.getText());
-                if (botonEntrada.isSelected())
+                if (botonEntrada.isChecked())
                     tipo = botonEntrada.getText().toString();
-                else if (botonPlatoFuerte.isSelected())
+                else if (botonPlatoFuerte.isChecked())
                     tipo = botonPlatoFuerte.getText().toString();
                 if (rbm.isChecked())
-                    horario = "Horario: " + rbm.getText().toString();
+                    horario = rbm.getText().toString();
                 else if (rbn.isChecked())
-                    horario = "Horario: " + rbn.getText().toString();
+                    horario = rbn.getText().toString();
                 else if (rbt.isChecked())
-                    horario = "Horario: " + rbt.getText().toString();
+                    horario = rbt.getText().toString();
                 tiempo = String.valueOf(pickerHorario.getValue());
-                plato plato = new plato(nombre, horario, tipo, tiempo, foto, Float.valueOf(precio), ingredientes);
+                plato = new plato(nombre, horario, tipo, tiempo, foto, Float.valueOf(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarPlato(plato);
-                /*cuadroDatos.setText(cuadroDatos.getText() + campoNombre.getHint().toString() + ": " + campoNombre.getText() + "\n");
-                cuadroDatos.setText(cuadroDatos.getText() + campoPrecio.getHint().toString() + ": " + campoPrecio.getText() + "\n");
-                cuadroDatos.setText(cuadroDatos.getText() + campoIngredientes.getHint().toString() + ": " + campoIngredientes.getText() + "\n");
-                if (botonEntrada.isSelected())
-                    cuadroDatos.setText(cuadroDatos.getText() + botonEntrada.getText().toString() + "\n");
-                else if (botonPlatoFuerte.isSelected())
-                    cuadroDatos.setText(cuadroDatos.getText() + botonPlatoFuerte.getText().toString() + "\n");
-                if (rbm.isChecked())
-                    cuadroDatos.setText(cuadroDatos.getText() + "horario" + ": " + rbm.getText().toString() + "\n");
-                else if (rbn.isChecked())
-                    cuadroDatos.setText(cuadroDatos.getText() + "horario" + rbn.getText().toString() + "\n");
-                else if (rbt.isChecked())
-                    cuadroDatos.setText(cuadroDatos.getText() + "horario" + rbt.getText().toString() + "\n");
-                String tiempo = String.valueOf(pickerHorario.getValue());
-                cuadroDatos.setText(cuadroDatos.getText() + etiqueta.getText().toString() + ": " + tiempo + "\n\n");
-                datosrRecuperados = String.valueOf(cuadroDatos.getText());
-                guardarPreferencias(cuadroDatos.getText().toString());*/
+                recyclerViewPlato = (RecyclerView) findViewById(R.id.recycler_platos);
+                recyclerViewPlato.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                adaptadorPlato = new RecyclerViewAdapterPlato(obtenerPlatos());
+                recyclerViewPlato.setAdapter(adaptadorPlato);
             }
         });
-        cargarPreferencias(cuadroDatos);
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        datosrRecuperados = String.valueOf(cuadroDatos.getText());
         savedInstanceState.putString(RESUME_KEY, datosrRecuperados);
         savedInstanceState.putString(FOTO_KEY, datosrRecuperados2);
         super.onSaveInstanceState(savedInstanceState);
@@ -193,7 +180,6 @@ public class PlatosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem opcionMenu) {
         int id = opcionMenu.getItemId();
         if (id == R.id.limpiar) {
-            cuadroDatos.setText("");
             campoNombre.setText("");
             campoPrecio.setText("");
             campoIngredientes.setText("");
@@ -240,5 +226,13 @@ public class PlatosActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         String dato = preferences.getString("Platos", "");
         campoDato.setText(dato);
+    }
+
+    private List<plato> obtenerPlatos(){
+        List<plato> platos = new ArrayList<>();
+        if(plato != null){
+            platos.add(plato);
+        }
+        return platos;
     }
 }
