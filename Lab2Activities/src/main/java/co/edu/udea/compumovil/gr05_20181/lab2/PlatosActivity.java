@@ -39,6 +39,8 @@ import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
 import co.edu.udea.compumovil.gr05_20181.lab2.data.platoContract;
 import gun0912.tedbottompicker.TedBottomPicker;
 
+import static android.util.Log.println;
+
 public class PlatosActivity extends AppCompatActivity {
     private Menu menu;
     private Button botonGaleria, botonRegistrar;
@@ -245,6 +247,7 @@ public class PlatosActivity extends AppCompatActivity {
             ingredientes = c.getString(c.getColumnIndex(platoContract.platoEntry.INGREDIENTES));
             horario=c.getString(c.getColumnIndex(platoContract.platoEntry.HORARIO));
             tiempo=c.getString(c.getColumnIndex(platoContract.platoEntry.TIEMPO));
+
             plato = new plato(nombre, horario, tipo, tiempo, foto, Float.parseFloat(precio), ingredientes);
             platos.add(plato);
         }

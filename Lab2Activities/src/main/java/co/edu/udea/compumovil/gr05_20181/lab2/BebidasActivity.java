@@ -65,6 +65,7 @@ public class BebidasActivity extends AppCompatActivity {
         botonGaleria = (Button) findViewById(R.id.botonGaleriaBebida);
         botonRegistrar = (Button) findViewById(R.id.botonRegistrarBebidas);
         iv_image = (ImageView) findViewById(R.id.imageViewBebida);
+        recyclerViewBebida = (RecyclerView) findViewById(R.id.recycler_bebidas);
         if (savedInstanceState != null) {
             datosrRecuperados = savedInstanceState.getString(RESUME_KEY);
             datosrRecuperados2 = savedInstanceState.getString(FOTO_KEY);
@@ -79,14 +80,16 @@ public class BebidasActivity extends AppCompatActivity {
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             // setSingleShowButton();
-                //obtenerTodasLasBebidas();
-                //println(Log.INFO,"MYTAG","CLICK");
+             setSingleShowButton();
+               //obtenerTodasLasBebidas();
+
             }
         });
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String foto = datosrRecuperados2;
                 String nombre, precio, ingredientes;
                 nombre = String.valueOf(campoNombre.getText());
@@ -95,10 +98,11 @@ public class BebidasActivity extends AppCompatActivity {
                 bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarBebida(bebida);
+
                 actualizarBebidas();
             }
         });
-        actualizarBebidas();
+       actualizarBebidas();
     }
 
     @Override
@@ -196,19 +200,28 @@ public class BebidasActivity extends AppCompatActivity {
             foto = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.FOTO));
             fotoUri=Uri.parse(foto);
             ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
+            println(Log.INFO,"MYTAG",nombre+" "+precio+" "+foto+" "+ingredientes);
+
             bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
             bebidas.add(bebida);
+
         }
     }
 
     private void actualizarBebidas(){
         obtenerTodasLasBebidas();
-        recyclerViewBebida = (RecyclerView) findViewById(R.id.recycler_bebidas);
+
+
         recyclerViewBebida.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adaptadorBebida = new RecyclerViewAdapterBebida(bebidas);
         recyclerViewBebida.setAdapter(adaptadorBebida);
+
+       /*
+
+       ATENCIÓN: LINEAS DE CODIGO EXPLOSIVAS:
         Toast toast = Toast.makeText(getApplicationContext(), bebidas.size(), Toast.LENGTH_SHORT);
         toast.show();
+*/
     }
 
 }
