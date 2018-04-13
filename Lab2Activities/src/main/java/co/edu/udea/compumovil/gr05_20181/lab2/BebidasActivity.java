@@ -79,7 +79,7 @@ public class BebidasActivity extends AppCompatActivity {
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String foto = "1";
+                String foto = datosrRecuperados2;
                 String nombre, precio, ingredientes;
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());

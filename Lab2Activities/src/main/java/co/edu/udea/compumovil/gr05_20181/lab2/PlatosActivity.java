@@ -126,11 +126,12 @@ public class PlatosActivity extends AppCompatActivity {
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String foto = "1";
+
                 String nombre, precio, ingredientes, horario = null, tipo = null, tiempo;
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());
                 ingredientes = String.valueOf(campoIngredientes.getText());
+                String foto = datosrRecuperados2;
                 if (botonEntrada.isChecked())
                     tipo = botonEntrada.getText().toString();
                 else if (botonPlatoFuerte.isChecked())
