@@ -59,6 +59,7 @@ public class PlatosActivity extends AppCompatActivity {
     private RecyclerView recyclerViewPlato;
     private RecyclerViewAdapterPlato adaptadorPlato;
     private plato plato;
+    private List<plato> platos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,10 +150,7 @@ public class PlatosActivity extends AppCompatActivity {
                 plato = new plato(nombre, horario, tipo, tiempo, foto, Float.valueOf(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarPlato(plato);
-                recyclerViewPlato = (RecyclerView) findViewById(R.id.recycler_platos);
-                recyclerViewPlato.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                adaptadorPlato = new RecyclerViewAdapterPlato(obtenerPlatos());
-                recyclerViewPlato.setAdapter(adaptadorPlato);
+
             }
         });
     }
@@ -232,46 +230,32 @@ public class PlatosActivity extends AppCompatActivity {
         campoDato.setText(dato);
     }
 
-    private List<plato> obtenerPlatos(){
-        List<plato> platos = new ArrayList<>();
-        if(plato != null){
-            platos.add(plato);
-        }
-        return platos;
-    }
-    /*
-
-    private String nombre;
-    private String horario;
-    private String tipo;
-    private String tiempo;
-    private String foto; //realmente se guarda la uri
-    private Float precio;
-    private String ingredientes;
-     */
-
-    public void obtenerTodasLosPlatos(){
+    public void obtenerTodosLosPlatos(){
         dbHelper db=new dbHelper(getApplicationContext());
         String nombre,horario,tipo,tiempo,precio,foto,ingredientes;
         Uri fotoUri;
         Cursor c=db.obtenerTodasLosPlatos();
-
-
-
-
+        platos = new ArrayList<>();
         while(c.moveToNext()){ //se obtiene nombre, precio, foto e ingredientes por registro, por eso esta en un while
-            nombre = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.NOMBRE));
-            precio= c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.PRECIO));
-            foto = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.FOTO));
+            nombre = c.getString(c.getColumnIndex(platoContract.platoEntry.NOMBRE));
+            precio= c.getString(c.getColumnIndex(platoContract.platoEntry.PRECIO));
+            foto = c.getString(c.getColumnIndex(platoContract.platoEntry.FOTO));
+            tipo = c.getString(c.getColumnIndex(platoContract.platoEntry.TIPO));
             fotoUri = Uri.parse(foto); //se convierte la foto a Uri
-            ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
+            ingredientes = c.getString(c.getColumnIndex(platoContract.platoEntry.INGREDIENTES));
             horario=c.getString(c.getColumnIndex(platoContract.platoEntry.HORARIO));
             tiempo=c.getString(c.getColumnIndex(platoContract.platoEntry.TIEMPO));
+            plato = new plato(nombre, horario, tipo, tiempo, foto, Float.parseFloat(precio), ingredientes);
+            platos.add(plato);
         }
-
-
-
     }
 
+    private void actualizarBebidas(){
+        obtenerTodosLosPlatos();
+        recyclerViewPlato = (RecyclerView) findViewById(R.id.recycler_platos);
+        recyclerViewPlato.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adaptadorPlato = new RecyclerViewAdapterPlato(platos);
+        recyclerViewPlato.setAdapter(adaptadorPlato);
+    }
 
 }

@@ -53,6 +53,7 @@ public class BebidasActivity extends AppCompatActivity {
     private RecyclerView recyclerViewBebida;
     private RecyclerViewAdapterBebida adaptadorBebida;
     private bebida bebida = null;
+    private List<bebida> bebidas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class BebidasActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
              // setSingleShowButton();
-                obtenerTodasLasBebidas();
+                //obtenerTodasLasBebidas();
                 //println(Log.INFO,"MYTAG","CLICK");
             }
         });
@@ -94,33 +95,11 @@ public class BebidasActivity extends AppCompatActivity {
                 bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarBebida(bebida);
-                recyclerViewBebida = (RecyclerView) findViewById(R.id.recycler_bebidas);
-                recyclerViewBebida.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                adaptadorBebida = new RecyclerViewAdapterBebida(obtenerBebidas());
-                recyclerViewBebida.setAdapter(adaptadorBebida);
+                actualizarBebidas();
             }
         });
+        actualizarBebidas();
     }
-
-    public void obtenerTodasLasBebidas(){
-        dbHelper db=new dbHelper(getApplicationContext());
-        String nombre,precio,foto,ingredientes;
-        Cursor c=db.obtenerTodasLasBebidas();
-        Uri fotoUri;
-
-        while(c.moveToNext()){ //se obtiene nombre, precio, foto e ingredientes por registro, por eso esta en un while
-            nombre = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.NOMBRE));
-            precio= c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.PRECIO));
-             foto = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.FOTO));
-             fotoUri=Uri.parse(foto);
-            ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
-        }
-
-
-
-    }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -205,12 +184,31 @@ public class BebidasActivity extends AppCompatActivity {
         campoDato.setText(dato);
     }
 
-    private List<bebida> obtenerBebidas(){
-        List<bebida> bebidas = new ArrayList<>();
-        if(bebida != null){
+    private void obtenerTodasLasBebidas(){
+        dbHelper db=new dbHelper(getApplicationContext());
+        String nombre,precio,foto,ingredientes;
+        Cursor c=db.obtenerTodasLasBebidas();
+        Uri fotoUri;
+        bebidas = new ArrayList<>();
+        while(c.moveToNext()){ //se obtiene nombre, precio, foto e ingredientes por registro, por eso esta en un while
+            nombre = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.NOMBRE));
+            precio= c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.PRECIO));
+            foto = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.FOTO));
+            fotoUri=Uri.parse(foto);
+            ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
+            bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
             bebidas.add(bebida);
         }
-        return bebidas;
+    }
+
+    private void actualizarBebidas(){
+        obtenerTodasLasBebidas();
+        recyclerViewBebida = (RecyclerView) findViewById(R.id.recycler_bebidas);
+        recyclerViewBebida.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adaptadorBebida = new RecyclerViewAdapterBebida(bebidas);
+        recyclerViewBebida.setAdapter(adaptadorBebida);
+        Toast toast = Toast.makeText(getApplicationContext(), bebidas.size(), Toast.LENGTH_SHORT);
+        toast.show();
     }
 
 }
