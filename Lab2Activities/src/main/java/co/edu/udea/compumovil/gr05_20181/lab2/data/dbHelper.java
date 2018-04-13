@@ -77,7 +77,7 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         return sqLiteDatabase.insert(
-                platoContract.platoEntry.TABLE_NAME,
+                bebidaContract.bebidaEntry.TABLE_NAME,
                 null,
                 beb.toContentValues());
 
@@ -95,6 +95,32 @@ public class dbHelper extends SQLiteOpenHelper {
                 null,
                 null);
         return c;
+    }
+
+
+
+    public Cursor obtenerTodasLasBebidas() {
+        return getReadableDatabase()
+                .query(
+                        bebidaContract.bebidaEntry.TABLE_NAME,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
+    }
+
+    public Cursor obtenerTodasLosPlatos() {
+        return getReadableDatabase()
+                .query(
+                        platoContract.platoEntry.TABLE_NAME,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
     }
 
 }

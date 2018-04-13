@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,8 +33,11 @@ import java.util.List;
 import java.util.Locale;
 
 import co.edu.udea.compumovil.gr05_20181.lab2.data.bebida;
+import co.edu.udea.compumovil.gr05_20181.lab2.data.bebidaContract;
 import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
 import gun0912.tedbottompicker.TedBottomPicker;
+
+import static android.util.Log.println;
 
 public class BebidasActivity extends AppCompatActivity {
 
@@ -73,7 +78,9 @@ public class BebidasActivity extends AppCompatActivity {
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setSingleShowButton();
+             // setSingleShowButton();
+                obtenerTodasLasBebidas();
+                //println(Log.INFO,"MYTAG","CLICK");
             }
         });
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +91,7 @@ public class BebidasActivity extends AppCompatActivity {
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());
                 ingredientes = String.valueOf(campoIngredientes.getText());
-                bebida = new bebida(nombre, "FOTO TEST", Float.parseFloat(precio), ingredientes);
+                bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarBebida(bebida);
                 recyclerViewBebida = (RecyclerView) findViewById(R.id.recycler_bebidas);
@@ -94,6 +101,26 @@ public class BebidasActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void obtenerTodasLasBebidas(){
+        dbHelper db=new dbHelper(getApplicationContext());
+        String nombre,precio,foto,ingredientes;
+        Cursor c=db.obtenerTodasLasBebidas();
+        Uri fotoUri;
+
+        while(c.moveToNext()){ //se obtiene nombre, precio, foto e ingredientes por registro, por eso esta en un while
+            nombre = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.NOMBRE));
+            precio= c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.PRECIO));
+             foto = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.FOTO));
+             fotoUri=Uri.parse(foto);
+            ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
+        }
+
+
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -3,6 +3,7 @@ package co.edu.udea.compumovil.gr05_20181.lab2;
 import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -32,8 +33,10 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.bebidaContract;
 import co.edu.udea.compumovil.gr05_20181.lab2.data.plato;
 import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
+import co.edu.udea.compumovil.gr05_20181.lab2.data.platoContract;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class PlatosActivity extends AppCompatActivity {
@@ -236,4 +239,39 @@ public class PlatosActivity extends AppCompatActivity {
         }
         return platos;
     }
+    /*
+
+    private String nombre;
+    private String horario;
+    private String tipo;
+    private String tiempo;
+    private String foto; //realmente se guarda la uri
+    private Float precio;
+    private String ingredientes;
+     */
+
+    public void obtenerTodasLosPlatos(){
+        dbHelper db=new dbHelper(getApplicationContext());
+        String nombre,horario,tipo,tiempo,precio,foto,ingredientes;
+        Uri fotoUri;
+        Cursor c=db.obtenerTodasLosPlatos();
+
+
+
+
+        while(c.moveToNext()){ //se obtiene nombre, precio, foto e ingredientes por registro, por eso esta en un while
+            nombre = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.NOMBRE));
+            precio= c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.PRECIO));
+            foto = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.FOTO));
+            fotoUri = Uri.parse(foto); //se convierte la foto a Uri
+            ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
+            horario=c.getString(c.getColumnIndex(platoContract.platoEntry.HORARIO));
+            tiempo=c.getString(c.getColumnIndex(platoContract.platoEntry.TIEMPO));
+        }
+
+
+
+    }
+
+
 }
