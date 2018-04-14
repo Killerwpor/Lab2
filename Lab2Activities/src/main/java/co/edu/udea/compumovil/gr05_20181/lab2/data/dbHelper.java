@@ -102,6 +102,7 @@ public class dbHelper extends SQLiteOpenHelper {
         String columns[] = new String[]{usuarioContract.usuarioEntry.CORREO,usuarioContract.usuarioEntry.CONTRASEÑA};
         String columns2[] = new String[]{correo};
         Cursor c = getReadableDatabase().query(
+                //a
                 usuarioContract.usuarioEntry.TABLE_NAME,
                 null,
                 usuarioContract.usuarioEntry.CORREO + " LIKE ?",
