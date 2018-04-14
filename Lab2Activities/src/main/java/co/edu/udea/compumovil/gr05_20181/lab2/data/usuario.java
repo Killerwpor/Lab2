@@ -17,6 +17,7 @@ public class usuario {
         this.setApellido(ape);
         this.setContraseña(co);
         this.setFoto(f);
+
     }
 
     public String getNombre() {

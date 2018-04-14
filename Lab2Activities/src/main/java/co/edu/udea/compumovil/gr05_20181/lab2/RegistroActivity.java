@@ -37,7 +37,7 @@ public class RegistroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
         botonGuardar=findViewById(R.id.botonRegistrarse);
         botonImagen = findViewById(R.id.botonImagen);
-        campoNombre=findViewById(R.id.campoNombre);
+        campoNombre=findViewById(R.id.campoNombre2);
         campoApellido=findViewById(R.id.campoApellido);
         campoContraseña=findViewById(R.id.campoContraseña);
         campoCorreo=findViewById(R.id.campoEmail);
@@ -48,7 +48,7 @@ public class RegistroActivity extends AppCompatActivity {
            @Override
            public void onClick(View view) {
 //hola@hotmail.com contraseña: carla
-               String foto = "x";
+               String foto = datosRecuperados;
                String nombre, correo, contraseña, apellido;
                nombre = String.valueOf(campoNombre.getText());
                apellido = String.valueOf(campoApellido.getText());
@@ -57,7 +57,7 @@ public class RegistroActivity extends AppCompatActivity {
                usuario user = new usuario(nombre, contraseña, apellido, correo, foto);
                dbHelper db = new dbHelper(getApplicationContext());
                try  {
-                   println(Log.ERROR,"MYTAG","Error "+contraseña);
+                 //  println(Log.ERROR,"MYTAG","Error "+contraseña);
                    db.guardarUsuario(user);
                }
                catch (Exception e){

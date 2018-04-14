@@ -7,7 +7,6 @@ public class platoContract {
 
     public static abstract class platoEntry implements BaseColumns {
         public static final String TABLE_NAME = "plato";
-
         public static final String ID = "id";
         public static final String NOMBRE = "nombre";
         public static final String HORARIO= "horario";
@@ -16,6 +15,8 @@ public class platoContract {
         public static final String FOTO = "foto";
         public static final String PRECIO = "precio";
         public static final String INGREDIENTES = "ingredientes";
+
+
 
     }
 

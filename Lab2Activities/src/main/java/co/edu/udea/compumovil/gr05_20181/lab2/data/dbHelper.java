@@ -35,6 +35,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 + platoContract.platoEntry.INGREDIENTES + " TEXT NOT NULL,"
                 + platoContract.platoEntry.PRECIO + " FLOAT NOT NULL,"
                 + platoContract.platoEntry.TIPO + " TEXT NOT NULL,"
+                + platoContract.platoEntry.TIEMPO + " TEXT NOT NULL,"
                 + "UNIQUE (" + platoContract.platoEntry._ID+ "))");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + bebidaContract.bebidaEntry.TABLE_NAME + " ("
@@ -97,6 +98,19 @@ public class dbHelper extends SQLiteOpenHelper {
         return c;
     }
 
+    public Cursor obtenerUsuarioPorCedula(String correo) {
+        String columns[] = new String[]{usuarioContract.usuarioEntry.CORREO,usuarioContract.usuarioEntry.CONTRASEÑA};
+        String columns2[] = new String[]{correo};
+        Cursor c = getReadableDatabase().query(
+                usuarioContract.usuarioEntry.TABLE_NAME,
+                null,
+                usuarioContract.usuarioEntry.CORREO + " LIKE ?",
+                columns2,
+                null,
+                null,
+                null);
+        return c;
+    }
 
 
     public Cursor obtenerTodasLasBebidas() {

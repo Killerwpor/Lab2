@@ -30,11 +30,11 @@
         android:ems="10"
         android:hint="Apellidos"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/campoNombre"
-        app:layout_constraintTop_toBottomOf="@+id/campoNombre" />
+        app:layout_constraintStart_toStartOf="@+id/campoNombre2"
+        app:layout_constraintTop_toBottomOf="@+id/campoNombre2" />
 
     <EditText
-        android:id="@+id/campoNombre"
+        android:id="@+id/campoNombre2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="37dp"

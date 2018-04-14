@@ -83,6 +83,7 @@ public class plato {
         values.put(platoContract.platoEntry.INGREDIENTES, ingredientes);
         values.put(platoContract.platoEntry.NOMBRE, nombre);
         values.put(platoContract.platoEntry.PRECIO, precio);
+        values.put(platoContract.platoEntry.HORARIO, horario);
         values.put(platoContract.platoEntry.TIEMPO, tiempo);
         values.put(platoContract.platoEntry.TIPO, tipo);
         values.put(platoContract.platoEntry.FOTO, foto);

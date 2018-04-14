@@ -94,7 +94,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_platos) {
             intent = new Intent(getApplicationContext(), PlatosActivity.class);
         } else if (id == R.id.nav_perfil) {
-            intent = new Intent(getApplicationContext(), RegistroActivity.class);
+            String Usuario= getIntent().getStringExtra("Usuario");
+            intent = new Intent(getApplicationContext(), PerfilActivity.class);
+            intent.putExtra("Usuario",Usuario);
         } else if (id == R.id.nav_acerca) {
             //intent = new Intent(getApplicationContext(), AcercaActivity.class);
         } else if (id == R.id.nav_configuracion) {
