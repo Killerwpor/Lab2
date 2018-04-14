@@ -3,6 +3,7 @@ package co.edu.udea.compumovil.gr05_20181.lab2.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -98,7 +99,7 @@ public class dbHelper extends SQLiteOpenHelper {
         return c;
     }
 
-    public Cursor obtenerUsuarioPorCedula(String correo) {
+    public Cursor obtenerUsuarioPorCorreo(String correo) {
         String columns[] = new String[]{usuarioContract.usuarioEntry.CORREO,usuarioContract.usuarioEntry.CONTRASEÑA};
         String columns2[] = new String[]{correo};
         Cursor c = getReadableDatabase().query(
@@ -136,6 +137,18 @@ public class dbHelper extends SQLiteOpenHelper {
                         null,
                         null,
                         null);
+    }
+
+    public boolean actualizarPerfil(String campo, String valor, String identificador){
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "update " + usuarioContract.usuarioEntry.TABLE_NAME + " set " + campo + "='" + valor + "' where " + usuarioContract.usuarioEntry.CORREO +" like '" + identificador + "'";
+        Object[] bindArgs = {};//identificador};
+        try{
+            db.execSQL(sql, bindArgs);
+            return true;
+        }catch(SQLException ex){
+            return false;
+        }
     }
 
 }

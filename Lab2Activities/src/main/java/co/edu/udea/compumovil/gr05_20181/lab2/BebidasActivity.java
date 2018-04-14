@@ -201,10 +201,8 @@ public class BebidasActivity extends AppCompatActivity {
             fotoUri=Uri.parse(foto);
             ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
             println(Log.INFO,"MYTAG",nombre+" "+precio+" "+foto+" "+ingredientes);
-
             bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
             bebidas.add(bebida);
-
         }
     }
 

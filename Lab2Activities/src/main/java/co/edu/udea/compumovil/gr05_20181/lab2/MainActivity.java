@@ -1,6 +1,8 @@
 package co.edu.udea.compumovil.gr05_20181.lab2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.dbHelper;
+import co.edu.udea.compumovil.gr05_20181.lab2.data.usuarioContract;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -22,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     private Button botonBebidas;
     private Button botonPlatos;
     private String current_language;
+    SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        sharedPreferences = getSharedPreferences("co.edu.udea.compumovil.gr05_20181.lab2", MODE_PRIVATE);
     }
 
     @Override
@@ -57,6 +65,25 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("firstRun", true)) {
+            String nombre, apellido, foto, contraseña;
+            dbHelper db=new dbHelper(getApplicationContext());
+            ConfiguracionesActivity configuracionesActivity = new ConfiguracionesActivity();
+            Cursor c = db.obtenerUsuarioPorCorreo(getIntent().getStringExtra("Usuario"));
+            if(c.moveToNext()) {
+                nombre = c.getString(c.getColumnIndex(usuarioContract.usuarioEntry.NOMBRE));
+                apellido = c.getString(c.getColumnIndex(usuarioContract.usuarioEntry.APELLIDO));
+                foto = c.getString(c.getColumnIndex(usuarioContract.usuarioEntry.FOTO));
+                contraseña = c.getString(c.getColumnIndex(usuarioContract.usuarioEntry.CONTRASEÑA));
+                configuracionesActivity.firstTimeRun(nombre, apellido, foto, contraseña, getApplicationContext());
+                sharedPreferences.edit().putBoolean("firstRun", false).commit();
+            }
         }
     }
 
@@ -88,19 +115,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         Intent intent = null;
         int id = item.getItemId();
+        String Usuario= getIntent().getStringExtra("Usuario");
 
         if (id == R.id.nav_bebidas) {
             intent = new Intent(getApplicationContext(), BebidasActivity.class);
         } else if (id == R.id.nav_platos) {
             intent = new Intent(getApplicationContext(), PlatosActivity.class);
         } else if (id == R.id.nav_perfil) {
-            String Usuario= getIntent().getStringExtra("Usuario");
             intent = new Intent(getApplicationContext(), PerfilActivity.class);
-            intent.putExtra("Usuario",Usuario);
+            intent.putExtra("Usuario", Usuario);
         } else if (id == R.id.nav_acerca) {
             //intent = new Intent(getApplicationContext(), AcercaActivity.class);
         } else if (id == R.id.nav_configuracion) {
-            //intent = new Intent(getApplicationContext(), ConfiguracionActivity.class);
+            intent = new Intent(getApplicationContext(), ConfiguracionesActivity.class);
+            intent.putExtra("Usuario", Usuario);
         } else if (id == R.id.nav_cerrar_sesion) {
             //intent = new Intent(getApplicationContext(), CerrarSesionActivity.class);
         }
