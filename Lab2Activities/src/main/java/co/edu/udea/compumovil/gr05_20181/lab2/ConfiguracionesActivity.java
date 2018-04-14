@@ -84,6 +84,11 @@ public class ConfiguracionesActivity extends AppCompatActivity {
         return sharedPreferences.getString(ConfiguracionesActivity.KEY_PREF_CONTRASEÑA, "");
     }
 
+    public boolean getSesion(Context context){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean(ConfiguracionesActivity.KEY_PREF_SESION, false);
+    }
+
     public void firstTimeRun(String nombre, String apellido, String foto, String contraseña, Context context){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
