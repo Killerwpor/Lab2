@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -51,8 +51,14 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".ClaseParaLasApis"
+            android:label="@string/title_activity_clase_para_las_apis"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Api" />
+        <activity android:name=".Clase_Para_Las_Apis"></activity>
     </application>
 
 </manifest>
