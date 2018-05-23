@@ -2,16 +2,19 @@ package co.edu.udea.compumovil.gr05_20181.lab2;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,11 +29,15 @@ import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.ResponseBebida;
 import gun0912.tedbottompicker.TedBottomPicker;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static android.util.Log.println;
 
@@ -47,8 +54,8 @@ public class BebidasActivity extends AppCompatActivity {
     private Button botonGaleria, botonRegistrar;
     private RecyclerView recyclerViewBebida;
     private RecyclerViewAdapterBebida adaptadorBebida;
-    private bebida bebida = null;
-    private List<bebida> bebidas;
+    private ResponseBebida bebida = null;
+    private static List<ResponseBebida> bebidas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +82,8 @@ public class BebidasActivity extends AppCompatActivity {
         botonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             setSingleShowButton();
-               //obtenerTodasLasBebidas();
+                setSingleShowButton();
+                //obtenerTodasLasBebidas();
 
             }
         });
@@ -84,7 +91,7 @@ public class BebidasActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+/*
                 String foto = datosrRecuperados2;
                 String nombre, precio, ingredientes;
                 nombre = String.valueOf(campoNombre.getText());
@@ -93,11 +100,11 @@ public class BebidasActivity extends AppCompatActivity {
                 bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
                 db.guardarBebida(bebida);
-
+*/
                 actualizarBebidas();
             }
         });
-       actualizarBebidas();
+        //actualizarBebidas();
     }
 
     @Override
@@ -184,11 +191,8 @@ public class BebidasActivity extends AppCompatActivity {
     }
 
     private void obtenerTodasLasBebidas(){
-        dbHelper db=new dbHelper(getApplicationContext());
-        String nombre,precio,foto,ingredientes;
-        Cursor c=db.obtenerTodasLasBebidas();
+        /*String nombre,precio,foto,ingredientes;
         Uri fotoUri;
-        bebidas = new ArrayList<>();
         while(c.moveToNext()){ //se obtiene nombre, precio, foto e ingredientes por registro, por eso esta en un while
             nombre = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.NOMBRE));
             precio= c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.PRECIO));
@@ -196,8 +200,36 @@ public class BebidasActivity extends AppCompatActivity {
             fotoUri=Uri.parse(foto);
             ingredientes = c.getString(c.getColumnIndex(bebidaContract.bebidaEntry.INGREDIENTES));
             println(Log.INFO,"MYTAG",nombre+" "+precio+" "+foto+" "+ingredientes);
-            bebida = new bebida(nombre, foto, Float.parseFloat(precio), ingredientes);
+            bebida = new ResponseBebida(nombre, ingredientes, Integer.parseInt(precio), foto);
             bebidas.add(bebida);
+        }*/
+        new PeticionBebidaGet().execute();
+    }
+
+    public static class PeticionBebidaGet extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String nombre, foto, ingredientes;
+            Integer precio;
+            Uri fotoUri;
+            try {
+                Call<List<ResponseBebida>> response = mApiService.getBebidas();
+                for (ResponseBebida bebida : response.execute().body()) {
+                    //Log.e("Bebidas: ", bebida.getNombre());
+                    nombre = bebida.getNombre();
+                    precio= bebida.getPrecio();
+                    foto = bebida.getFoto();
+                    fotoUri = Uri.parse(foto);
+                    ingredientes = bebida.getIngredientes();
+                    //println(Log.INFO,"MYTAG",nombre+" "+precio+" "+foto+" "+ingredientes);
+                    bebida = new ResponseBebida(nombre, ingredientes, precio, foto);
+                    bebidas.add(bebida);
+                }
+            } catch(IOException e){
+                Log.e("ERROR", e.toString());
+            }
+            return null;
         }
     }
 
@@ -210,11 +242,24 @@ public class BebidasActivity extends AppCompatActivity {
         recyclerViewBebida.setAdapter(adaptadorBebida);
 
        /*
-
        ATENCIÓN: LINEAS DE CODIGO EXPLOSIVAS:
         Toast toast = Toast.makeText(getApplicationContext(), bebidas.size(), Toast.LENGTH_SHORT);
         toast.show();
 */
+    }
+
+    public static class PeticionBebidaPost extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                Call<ResponseBebida> response = mApiService.postBebida("PRUEBA".trim(), "PRUEBA".trim(), 1500, "PRUEBA".trim());
+                response.execute();
+            } catch(Exception e){
+                Log.e("ERROR", e.toString());
+            }
+            return null;
+        }
     }
 
 }
