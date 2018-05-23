@@ -10,6 +10,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.R;
+import co.edu.udea.compumovil.gr05_20181.lab2.data.ResponseBebida;
+
+/**
+ * Created by jdavid.sanchez on 23/05/18.
+ */
+
 public class RecyclerViewAdapterBebida extends RecyclerView.Adapter<RecyclerViewAdapterBebida.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -25,9 +32,9 @@ public class RecyclerViewAdapterBebida extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-    public List<bebida> bebidasLista;
+    public List<ResponseBebida> bebidasLista;
 
-    public RecyclerViewAdapterBebida(List<bebida> bebidasLista){
+    public RecyclerViewAdapterBebida(List<ResponseBebida> bebidasLista){
         this.bebidasLista = bebidasLista;
     }
 
@@ -53,4 +60,5 @@ public class RecyclerViewAdapterBebida extends RecyclerView.Adapter<RecyclerView
     public int getItemCount() {
         return bebidasLista.size();
     }
+
 }

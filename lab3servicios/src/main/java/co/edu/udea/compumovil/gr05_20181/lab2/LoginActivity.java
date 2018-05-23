@@ -60,15 +60,16 @@ public class LoginActivity extends AppCompatActivity{
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin(View view) {
-        dbHelper db = new dbHelper(getApplicationContext());
+        //dbHelper db = new dbHelper(getApplicationContext());
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         //correo ss contraseña: d
-        Cursor c = db.getLawyerById(email,password);
-        Boolean comprobacion=c.moveToNext();
+        //Cursor c = db.getLawyerById(email,password);
+        //Boolean comprobacion=c.moveToNext();
+        Boolean comprobacion = true;
         if (comprobacion) {
             intent.putExtra("Usuario", email);
             startActivity(intent);

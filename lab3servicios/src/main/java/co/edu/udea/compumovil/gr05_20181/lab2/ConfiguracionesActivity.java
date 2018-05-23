@@ -25,7 +25,7 @@ public class ConfiguracionesActivity extends AppCompatActivity {
                 .replace(android.R.id.content, new ConfiguracionesFragment())
                 .commit();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        final dbHelper db = new dbHelper(getApplicationContext());;
+        /*final dbHelper db = new dbHelper(getApplicationContext());;
         prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if(key.equals(ConfiguracionesActivity.KEY_PREF_NOMBRE)){
@@ -44,7 +44,7 @@ public class ConfiguracionesActivity extends AppCompatActivity {
 
                 }
             }
-        };
+        };*/
         sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener);
 
     }

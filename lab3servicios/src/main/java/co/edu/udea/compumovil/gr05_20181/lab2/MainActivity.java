@@ -17,6 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.remote.APIService;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity
     private Button botonPlatos;
     private String current_language;
     SharedPreferences sharedPreferences = null;
+    private Retrofit retrofit;
+    public static APIService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,15 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         sharedPreferences = getSharedPreferences("co.edu.udea.compumovil.gr05_20181.lab2", MODE_PRIVATE);
+
+        final String url = "http://192.168.194.8:3000/";
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mApiService = retrofit.create(APIService.class);
+
     }
 
     @Override
@@ -66,7 +81,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (sharedPreferences.getBoolean("firstRun", true)) {
+        /*if (sharedPreferences.getBoolean("firstRun", true)) {
             String nombre, apellido, foto, contraseña;
             dbHelper db=new dbHelper(getApplicationContext());
             ConfiguracionesActivity configuracionesActivity = new ConfiguracionesActivity();
@@ -79,7 +94,7 @@ public class MainActivity extends AppCompatActivity
                 configuracionesActivity.firstTimeRun(nombre, apellido, foto, contraseña, getApplicationContext());
                 sharedPreferences.edit().putBoolean("firstRun", false).commit();
             }
-        }
+        }*/
     }
 
     @Override

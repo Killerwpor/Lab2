@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.ResponsePlato;
+
 public class RecyclerViewAdapterPlato extends RecyclerView.Adapter<RecyclerViewAdapterPlato.ViewHolder> {
 
 public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -28,9 +30,9 @@ public static class ViewHolder extends RecyclerView.ViewHolder{
     }
 }
 
-    public List<plato> platosLista;
+    public List<ResponsePlato> platosLista;
 
-    public RecyclerViewAdapterPlato(List<plato> platosLista){
+    public RecyclerViewAdapterPlato(List<ResponsePlato> platosLista){
         this.platosLista = platosLista;
     }
 

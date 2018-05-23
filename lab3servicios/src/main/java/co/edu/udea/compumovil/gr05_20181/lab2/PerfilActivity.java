@@ -22,10 +22,10 @@ public class PerfilActivity extends AppCompatActivity {
         imagen = findViewById(R.id.imagen);
         nombre = findViewById(R.id.campoNombre2);
         correo = findViewById(R.id.campoCorreo2);
-        dbHelper db = new dbHelper(getApplicationContext());
+        //dbHelper db = new dbHelper(getApplicationContext());
         String Usuario= getIntent().getStringExtra("Usuario");
-        Cursor c = db.obtenerUsuarioPorCorreo(Usuario);
-        c.moveToNext();
+        //Cursor c = db.obtenerUsuarioPorCorreo(Usuario);
+        //c.moveToNext();
         nombre.setText(configuracionesActivity.getKeyPrefNombre(getApplicationContext()) + " " + configuracionesActivity.getKeyPrefApellido(getApplicationContext()));
         correo.setText(Usuario);
         Uri uri = Uri.parse(configuracionesActivity.getKeyPrefFoto(getApplicationContext()));

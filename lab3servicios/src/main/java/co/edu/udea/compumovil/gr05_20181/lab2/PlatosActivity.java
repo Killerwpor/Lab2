@@ -31,6 +31,7 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.udea.compumovil.gr05_20181.lab2.data.ResponsePlato;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 public class PlatosActivity extends AppCompatActivity {
@@ -52,8 +53,8 @@ public class PlatosActivity extends AppCompatActivity {
     CheckBox rbm, rbt, rbn;
     private RecyclerView recyclerViewPlato;
     private RecyclerViewAdapterPlato adaptadorPlato;
-    private plato plato;
-    private List<plato> platos;
+    private ResponsePlato plato;
+    private List<ResponsePlato> platos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +125,7 @@ public class PlatosActivity extends AppCompatActivity {
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+/*
                 String nombre, precio, ingredientes, horario = null, tipo = null, tiempo;
                 nombre = String.valueOf(campoNombre.getText());
                 precio = String.valueOf(campoPrecio.getText());
@@ -143,7 +144,7 @@ public class PlatosActivity extends AppCompatActivity {
                 tiempo = String.valueOf(pickerHorario.getValue());
                 plato = new plato(nombre, horario, tipo, tiempo, foto, Float.valueOf(precio), ingredientes);
                 dbHelper db = new dbHelper(getApplicationContext());
-                db.guardarPlato(plato);
+                db.guardarPlato(plato);*/
 
             }
         });
@@ -225,7 +226,7 @@ public class PlatosActivity extends AppCompatActivity {
     }
 
     public void obtenerTodosLosPlatos(){
-        dbHelper db=new dbHelper(getApplicationContext());
+        /*dbHelper db=new dbHelper(getApplicationContext());
         String nombre,horario,tipo,tiempo,precio,foto,ingredientes;
         Uri fotoUri;
         Cursor c=db.obtenerTodasLosPlatos();
@@ -242,15 +243,15 @@ public class PlatosActivity extends AppCompatActivity {
 
             plato = new plato(nombre, horario, tipo, tiempo, foto, Float.parseFloat(precio), ingredientes);
             platos.add(plato);
-        }
+        }*/
     }
 
     private void actualizarBebidas(){
-        obtenerTodosLosPlatos();
+        /*obtenerTodosLosPlatos();
         recyclerViewPlato = (RecyclerView) findViewById(R.id.recycler_platos);
         recyclerViewPlato.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adaptadorPlato = new RecyclerViewAdapterPlato(platos);
-        recyclerViewPlato.setAdapter(adaptadorPlato);
+        recyclerViewPlato.setAdapter(adaptadorPlato);*/
     }
 
 }

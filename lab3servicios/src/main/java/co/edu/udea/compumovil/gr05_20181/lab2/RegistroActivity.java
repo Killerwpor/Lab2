@@ -52,11 +52,11 @@ public class RegistroActivity extends AppCompatActivity {
                apellido = String.valueOf(campoApellido.getText());
                correo = String.valueOf(campoCorreo.getText());
                contraseña = String.valueOf(campoContraseña.getText());
-               usuario user = new usuario(nombre, contraseña, apellido, correo, foto);
-               dbHelper db = new dbHelper(getApplicationContext());
+               //usuario user = new usuario(nombre, contraseña, apellido, correo, foto);
+               //dbHelper db = new dbHelper(getApplicationContext());
                try  {
                  //  println(Log.ERROR,"MYTAG","Error "+contraseña);
-                   db.guardarUsuario(user);
+                 //  db.guardarUsuario(user);
                }
                catch (Exception e){
                   println(Log.ERROR,"MYTAG","Error "+e);
