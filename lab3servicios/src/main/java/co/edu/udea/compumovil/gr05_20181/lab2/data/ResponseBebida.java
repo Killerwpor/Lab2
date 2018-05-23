@@ -1,4 +1,4 @@
-package lab3.gr05_20181.compumovil.udea.edu.co.lab3servicios.data;
+package co.edu.udea.compumovil.gr05_20181.lab2.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
